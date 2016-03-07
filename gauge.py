@@ -205,7 +205,6 @@ def metropolis(a1,a2,beta):
 		return False
 
 
-
 ######################### Field class ###############################
 class Field:
 	"""Stores a lattice gauge field."""
@@ -264,7 +263,17 @@ class Field:
 		D1 = min(d1,d2); D2 = max(d1,d2)
 		idx = list(tuple(v)+(0,))
 		n = self.ndim+1
-		idxs = [tuple(mod(idx+i,self.eshape)) for i in [unit(n,-1,D1), unit(n,D1,1)+unit(n,-1,D2), unit(n,D2,1)+unit(n,-1,D1), unit(n,-1,D2)]]
+		idx0 = idx.copy();idx1=idx.copy();idx2=idx.copy();idx3=idx.copy()
+		idx0[-1]+=D1; idx1[-1]+=D2; idx2[-1]+=D1; idx3[-1]+=D2;
+		if idx1[D1]!=self.shape[D1]-1: 
+			idx1[D1]+=1
+		else:
+			idx1[D1] = 0
+		if idx2[D2]!=self.shape[D2]-1:
+			idx2[D2]+=1
+		else:
+			idx2[D2] = 0
+		idxs = [tuple(idx0),tuple(idx1),tuple(idx2),tuple(idx3)]
 		if ret=='i':
 			return idxs
 		elif ret=='a':
@@ -353,21 +362,43 @@ class Field:
 					self.update(j)
 	
 	def energy(self):
-		"""Energy per edge of the gauge theory for current configuration,
+		"""Energy per plaquette of the gauge theory for current configuration,
 			defined as just the total action (Hamiltonian) divided by
 			the number of edges."""
 		action = 0
 		for i in multirange(self.shape):
 			for j in itertools.combinations(range(self.ndim),2):
 				action += self.vplaquette(i,j[0],j[1],ret='a')
-		action /= self.L.ne
+		action /= (self.L.nv*self.ndim*(self.ndim-1)/2)
 		return action
+	
+	def stats(self,nsweeps,ret='ms'):
+		"""Gets mean energy and standard deviation by sweeping nsweeps times and 
+			accumulating energies at each step."""
+		en = zeros(nsweeps)
+		for i in range(nsweeps):
+			self.sweep()
+			en[i] = self.energy()
+		out = []
+		for i in ret:
+			if i=='m':
+				out.append(mean(en))
+			elif i=='s':
+				out.append(std(en))
+			elif i=='v':
+				out.append(var(en))
+			elif i=='e':
+				out.append(en)
+		if len(out)==1:
+			return out[0]
+		else:
+			return tuple(out)
 
-def hyst(field,betas,sweeps,nvar=10,talk=True,avg=True,betaOut=True):
+def hyst(field,betas,neq,nstat=10,talk=True,avg=True,betaOut=True):
 	"""Scan inverse temperature through range given by betas and look at
-		energy of field.  sweeps is a number of equilibration sweeps to make
+		energy of field.  neq is a number of equilibration sweeps to make
 		at each new value of betas.
-		nvar is the number of sweeps to do to get statistics on the variance
+		nstat is the number of sweeps to do to get statistics on the variance
 		of the energy (i.e. the heat capacity).
 		Note: betas can be a length 3 tuple, in which case beta is allowed to
 		range from betas[0] to betas[1] in increments of betas[2]."""
@@ -375,12 +406,12 @@ def hyst(field,betas,sweeps,nvar=10,talk=True,avg=True,betaOut=True):
 		betas = concatenate((arange(betas[0],betas[1],betas[2]),arange(betas[1],betas[0],-betas[2])))
 	en  = zeros(betas.shape)	# Energies
 	ven = zeros(betas.shape)	# Variance of energies
-	ens = zeros(nvar)			# This will store energies for computing the energy variance
+	ens = zeros(nstat)			# This will store energies for computing statistics
 	for i in range(len(betas)):
 		if talk: print("Step {} of {}".format(i,len(betas)))
 		field.B = betas[i]		# Update field temperature
-		field.sweep(ntimes=sweeps)		# Equilibrate the field
-		for j in range(nvar):	# Get statistics for energy variance
+		field.sweep(ntimes=neq)		# Equilibrate the field
+		for j in range(nstat):	# Get statistics
 			field.sweep()
 			ens[j] = field.energy()
 		ven[i] = var(ens)
@@ -389,13 +420,40 @@ def hyst(field,betas,sweeps,nvar=10,talk=True,avg=True,betaOut=True):
 		else:
 			en[i] = ens[-1]
 	if betaOut:
-		print('avg is ',avg)
 		return en,ven,betas
 	else:
 		return en,ven
 
+def watchSweep(field,stop=-1,talk=False):
+	"""Does a sweep and measures energy at each step along the way."""
+	en = zeros(product(field.eshape)+1)
+	en[0] = field.energy()
+	j = 1
+	for i in multirange(field.eshape):
+		if talk: print(j)
+		field.update(i)
+		en[j] = field.energy()
+		j += 1
+		if j==mod(stop,len(en)):
+			break
+	return en[0:j]
 
-
+def view(field,v,d1,d2,fig=None,lw=10.):
+	"""View a field cross-section with directions d1 and d2, passing through vertex v."""
+	slc = list(v); slc[d1] = slice(None); slc[d2] = slice(None); slc = tuple(slc)
+	crosec1 = field.L.e[slc+(d1,)]; crosec2 = field.L.e[slc+(d2,)]
+	figure(fig)
+	for i in multirange(crosec1.shape):
+		plot([i[0],i[0]+1],[i[1],i[1]],color=ncolor(field.G.size,crosec1[i]),linewidth=lw)
+		plot([i[0],i[0]],[i[1],i[1]+1],color=ncolor(field.G.size,crosec2[i]),linewidth=lw)
+	
+def ncolor(N,i,l=(0,.9,0,.9,0,.9)):
+	"""Generates a 'uniform' color palatte for N colors, returning the ith color.
+		l is the limits on how deep the colors can be, in rgb."""
+	n = ceil(N**(1./3.))
+	b = mod(i,n); r = i//n**2; g = mod(i//n,n);	
+	b /= (n-1.); r/= (n-1.); g /= (n-1.)				# These are fairly uniformly chosen colors
+	return [l[4]+r*(l[5]-l[4]),l[2]+g*(l[3]-l[2]),l[0]+b*(l[1]-l[0])]
 #	def ravelidx(idx,shape):
 #	"""Ravels and unravels indices for flattening and unflattening arrays."""
 #	if hasattr(idx,'__len__') and len(idx)==len(shape):		# This means we want to flatten

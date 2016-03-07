@@ -163,7 +163,7 @@ class IntGroup:
 # Klein 4-group:
 TKlein = array([[0,1,2,3],[1,0,3,2],[2,3,0,1],[3,2,1,0]])
 Klein = IntGroup(TKlein)
-KDaction = lambda a: float(a==Klein.id)
+KDaction = lambda a: float(a!=Klein.id)
 
 # Quaternion group:
 # The element identification is 1->0, -1->1, i->2,-i->3,j->4,-j->5,k->6,-k->7
@@ -177,7 +177,7 @@ TQ = array([	[0,1,2,3,4,5,6,7],
 				[6,7,4,5,3,2,1,0],
 				[7,6,5,4,2,3,0,1]])
 Quaternion = IntGroup(TQ,names=Qnames)
-QDaction = lambda a: float(a==Quaternion.id)
+QDaction = lambda a: float(a!=Quaternion.id)
 
 # Z_N
 def ZN(N,action=None):
@@ -188,7 +188,7 @@ def ZN(N,action=None):
 	if action is None:
 		return G
 	elif action=='delta':
-		ZNaction = lambda a: float(a==G.id)
+		ZNaction = lambda a: float(a!=G.id)
 		return G, ZNaction
 	elif action=='U1':
 		ZNaction = lambda a: 1-cos(2*pi*a/N)
@@ -342,10 +342,15 @@ class Field:
 			if self.accept(self.L.e[i],newg,self.B):
 				self.L.e[i] = newg
 	
-	def sweep(self,evf='e'):
+	def sweep(self,evf='e',ntimes=1):
 		"""Sweeps through all indices of the lattice, updating along the way."""
-		for i in multirange(self.shape+(self.ndim,)):
-			self.update(i)
+		if ntimes==1:		# Main case
+			for i in multirange(self.eshape):
+				self.update(i)
+		else:
+			for i in range(ntimes):
+				for j in multirange(self.eshape):
+					self.update(j)
 	
 	def energy(self):
 		"""Energy per edge of the gauge theory for current configuration,
@@ -357,6 +362,38 @@ class Field:
 				action += self.vplaquette(i,j[0],j[1],ret='a')
 		action /= self.L.ne
 		return action
+
+def hyst(field,betas,sweeps,nvar=10,talk=True,avg=True,betaOut=True):
+	"""Scan inverse temperature through range given by betas and look at
+		energy of field.  sweeps is a number of equilibration sweeps to make
+		at each new value of betas.
+		nvar is the number of sweeps to do to get statistics on the variance
+		of the energy (i.e. the heat capacity).
+		Note: betas can be a length 3 tuple, in which case beta is allowed to
+		range from betas[0] to betas[1] in increments of betas[2]."""
+	if isinstance(betas,tuple):	# convenience
+		betas = concatenate((arange(betas[0],betas[1],betas[2]),arange(betas[1],betas[0],-betas[2])))
+	en  = zeros(betas.shape)	# Energies
+	ven = zeros(betas.shape)	# Variance of energies
+	ens = zeros(nvar)			# This will store energies for computing the energy variance
+	for i in range(len(betas)):
+		if talk: print("Step {} of {}".format(i,len(betas)))
+		field.B = betas[i]		# Update field temperature
+		field.sweep(ntimes=sweeps)		# Equilibrate the field
+		for j in range(nvar):	# Get statistics for energy variance
+			field.sweep()
+			ens[j] = field.energy()
+		ven[i] = var(ens)
+		if avg:
+			en[i] = average(ens)
+		else:
+			en[i] = ens[-1]
+	if betaOut:
+		print('avg is ',avg)
+		return en,ven,betas
+	else:
+		return en,ven
+
 
 
 #	def ravelidx(idx,shape):

@@ -147,16 +147,16 @@ class IntGroup:
 	
 	def __call__(self,*a):
 		'''Group product.'''
-		if isinstance(a[0],str):
-			b = self.seman[a[0]]
-		else:		# a[0] should in this case be an integer 
-			b = a[0]
-
+		#if isinstance(a[0],str):
+		#	b = self.seman[a[0]]
+		#else:		# a[0] should in this case be an integer 
+		#	b = a[0]
+		b = a[0]		# Simplifying the previous four lines to this for speed
 		for i in range(1,len(a)):
-			if type(a[i])==str:
-				b = self.table[b,self.seman[a[i]]]
-			else:
-				b = self.table[b,a[i]]
+			#if type(a[i])==str:
+			#	b = self.table[b,self.seman[a[i]]]
+			#else:
+				b = self.table[b,a[i]]		# Eliminating the previous three lines for speed
 		return b
 
 ########################### Some groups: ##########################
@@ -254,20 +254,19 @@ class Field:
 				self.L.e[self.shape[0]//2:,:] = int(init[4:])
 	
 	def vplaquette(self,v,d1,d2,ret='i'):
-		"""Gets edge indices or action of plaquette with lowest dictionary-ordered
+		"""Gets edge indices or action of plaquette with lower-left
 			vertex v and directions d1 and d2.
 			if ret=='i', indices are returned.
 			if ret=='a', action is returned.
 			"""
 		if not hasattr(v,'__iter__'): raise ValueError("v must be iterable of subscripts for L.v")
 		D1 = min(d1,d2); D2 = max(d1,d2)
-		idx = list(tuple(v)+(0,))
-		n = self.ndim+1
-		idx0 = idx.copy();idx1=idx.copy();idx2=idx.copy();idx3=idx.copy()
+		idx = list(v)+[0]		# Formerly had list(tuple(v)+(0,)).  Hopefully no errors arise from this simplification
+		idx0 = idx.copy();idx1=idx.copy();idx2=idx.copy();idx3=idx.copy()	# Will be indices of plaquette edges
 		idx0[-1]+=D1; idx1[-1]+=D2; idx2[-1]+=D1; idx3[-1]+=D2;
-		if idx1[D1]!=self.shape[D1]-1: 
+		if idx1[D1]!=self.shape[D1]-1: 		# Usual case: not near the lattice boundary
 			idx1[D1]+=1
-		else:
+		else:								# Boundary case
 			idx1[D1] = 0
 		if idx2[D2]!=self.shape[D2]-1:
 			idx2[D2]+=1
@@ -278,6 +277,8 @@ class Field:
 			return idxs
 		elif ret=='a':
 			return self.action(self.Prod(*[self.L.e[i] for i in idxs]))
+		elif ret=='p':
+			return self.Prod(*[self.L.e[i] for i in idxs])
 	
 	def Prod(self,a,b,c,d):
 		"""Plaquette product a*b*(c^-1)*(d^-1)."""
@@ -291,15 +292,17 @@ class Field:
 			product of plaquette edges.
 			'ai' or 'ia' means return both as a tuple (with given order).
 			"""
-		v = E[:-1]		# This is the lowest dictionary-ordered vertex in the plaquette
+		# v will store the lowest dictionary-ordered vertex in the plaquette
+		# But we must first determine which side of the plaquette E lies on.
+		v = list(E[:-1])
 		if sgn==-1:
 			v[d]-=1
-		i = vplaquette(v,d,E[-1])	# Indices for the plaquette edges, in standard order
+		i = self.vplaquette(v,d,E[-1])	# Indices for the plaquette edges, in standard order
 		
 		if val is None:
-			g = self.Prod(self.L[i[0]],self.L[i[1]],self.L[i[2]],self.L[i[3]])
+			g = self.Prod(self.L.e[i[0]],self.L.e[i[1]],self.L.e[i[2]],self.L.e[i[3]])
 		else:
-			gs = [self.L[i[0]],self.L[i[1]],self.L[i[2]],self.L[i[3]]]	# group elements for all edges of the plaquette
+			gs = [self.L.e[i[0]],self.L.e[i[1]],self.L.e[i[2]],self.L.e[i[3]]]	# group elements for all edges of the plaquette
 			# We need to figure out which side of the plaquette E is on.  We do that next:
 			if sgn==1 :
 				if E[-1]<d:
@@ -329,17 +332,63 @@ class Field:
 					out.append(a)
 			return tuple(out)
 	
-	def edgeAction(self,E,val=None,evf='e'):
+	def Plaction(self,v,d1,d2):
+		"""Plaquette action for vertex v and directions d1<d2.
+			THIS METHOD IS NOT SAFE AGAIST SWAPPING d1 AND d2!
+			"""
+		return self.action(self.Prod(self.L.e[tuple(v0)+(d,)],self.L.e[tuple(v1)+(dE,)], 
+								self.L.e[tuple(v3)+(d,)], self.L.e[tuple(v0)+(dE,)]))
+	
+	def edgeAction(self,E,val=None,evf='e',method=2):
 		"""Action contingent on edge E.
 			If supplied, val is substituted for the current value of edge E
 			in determining the action.  Otherwise self.e[E] is used. 
 			"""
 		dE = E[-1]		# Edge direction
+		v = list(E[:-1])		# Lower vertex of edge
+		for i in range(len(v)):	# This trick deals with periodicity
+			if v[i]==self.shape[i]-1:
+				v[i] = -1
 		action = 0
-		for d in range(self.ndim):
-			if not d==dE:
-				for sgn in {1,-1}:
-					action += self.plaquette(E,d,sgn,val,ret='a')
+		# Removing the next four lines and replacing them with a faster alternative
+		if method==0: 
+			pass
+		if method==1:
+			for d in range(self.ndim):
+				if not d==dE:
+					for sgn in {1,-1}:
+						action += self.plaquette(E,d,sgn,val,ret='a')
+		elif method==2:
+			#sgn = 1
+			v0 = list(v); v1 = list(v); v3 = list(v)		# These are vertices of the plaquette
+			for d in range(dE):		# This case is E on the left side of the square -> |_|
+				v1[d] += 1			# First vertex
+				v3[dE] += 1			# Third vertex
+				action += self.action(self.Prod(self.L.e[tuple(v0)+(d,)],self.L.e[tuple(v1)+(dE,)], 
+								self.L.e[tuple(v3)+(d,)], self.L.e[tuple(v0)+(dE,)]))
+				v1[d] -= 1; v3[dE] -= 1		# Undo changes
+			
+			for d in range(dE+1,self.ndim):		# This case is E on bottom
+				v1[dE] += 1
+				v3[d] += 1
+				action += self.action(self.Prod(self.L.e[tuple(v0)+(d,)],self.L.e[tuple(v1)+(dE,)], 
+								self.L.e[tuple(v3)+(d,)], self.L.e[tuple(v0)+(dE,)]))
+				v1[dE] -= 1; v3[d] -= 1
+			
+			#sgn = -1
+			for d in range(dE):		# This case is E is on the right side |_| <-- of the square
+				v0[d] -= 1			# This is the base vertex of the plaquette
+				v3[d] -= 1; v3[dE]+=1
+				action += self.action(self.Prod(self.L.e[tuple(v0)+(d,)],self.L.e[tuple(v1)+(dE,)], 
+								self.L.e[tuple(v3)+(d,)], self.L.e[tuple(v0)+(dE,)]))
+				v0[d] += 1; v3[d] += 1; v3[dE] -= 1;	# Undo changes
+			for d in range(dE+1,self.ndim):	# This case is E on top of the square
+				v0[d] -= 1
+				v1[d] -= 1; v1[dE] += 1
+				action += self.action(self.Prod(self.L.e[tuple(v0)+(d,)],self.L.e[tuple(v1)+(dE,)], 
+								self.L.e[tuple(v3)+(d,)], self.L.e[tuple(v0)+(dE,)]))
+				v0[d] += 1; v1[d] += 1; v1[dE] -= 1
+		
 		return action
 	
 	def update(self,i,evf='e'):
@@ -348,8 +397,22 @@ class Field:
 			newg = randint(0,self.G.size)
 			while newg==self.L.e[i]:
 				newg = randint(0,self.G.size)
-			if self.accept(self.L.e[i],newg,self.B):
+			if self.accept(self.edgeAction(i),self.edgeAction(i,newg),self.B):
 				self.L.e[i] = newg
+	
+	def randUpdate(self,n=1,evf='e'):
+		"""Updates a random site.  Repeats n times."""
+		if evf=='e':
+			for j in range(n):
+				# First get a random edge:
+				i = list(self.eshape)
+				for j in range(len(i)):
+					i[j] = randint(0,i[j])
+				newg = randint(0,self.G.size)
+				while newg==self.L.e[i]:
+					newg = randint(0,self.G.size)
+				if self.accept(self.edgeAction(i),self.edgeAction(i,newg),self.B):
+					self.L.e[i] = newg
 	
 	def sweep(self,evf='e',ntimes=1):
 		"""Sweeps through all indices of the lattice, updating along the way."""
@@ -372,13 +435,15 @@ class Field:
 		action /= (self.L.nv*self.ndim*(self.ndim-1)/2)
 		return action
 	
-	def stats(self,nsweeps,ret='ms'):
-		"""Gets mean energy and standard deviation by sweeping nsweeps times and 
-			accumulating energies at each step."""
-		en = zeros(nsweeps)
-		for i in range(nsweeps):
+	def stats(self,n,relax=1,ret='ms'):
+		"""Gets mean energy and standard deviation by sweeping n*relax times and 
+			accumulating energies every relax number of steps.
+			(The name relax is a reference to relaxation time.)"""
+		en = zeros(n)
+		for i in range(n*relax):
 			self.sweep()
-			en[i] = self.energy()
+			if mod(i+1,relax)==0:
+				en[(i+1)//relax-1] = self.energy()
 		out = []
 		for i in ret:
 			if i=='m':
@@ -393,8 +458,27 @@ class Field:
 			return out[0]
 		else:
 			return tuple(out)
+	
+	def status(self,ret='ep'):
+		"""Displays or returns info about the current state."""
+		ge = zeros(self.G.size)		# This will bin how many edges have a given group element
+		gp = zeros(self.G.size)		# This will bin how many plaquettes have a given group element
+		for i in multirange(self.shape):
+			for j in range(self.ndim-1):
+				ge[self.L.e[i+(j,)]] +=1		# Accumulate edge group elements
+				for k in range(j+1,self.ndim):
+					gp[self.vplaquette(i,j,k,ret='p')] +=1
+			ge[self.L.e[i+(self.ndim-1,)]] +=1
+		
+		out = []
+		for i in ret:
+			if i=='e':
+				out.append(ge)
+			elif i=='p':
+				out.append(gp)
+		return tuple(out)
 
-def hyst(field,betas,neq,nstat=10,talk=True,avg=True,betaOut=True):
+def hyst(field,betas,neq=2,nstat=10,relax=10,inc=10,talk=True,avg=True,betaOut=True):
 	"""Scan inverse temperature through range given by betas and look at
 		energy of field.  neq is a number of equilibration sweeps to make
 		at each new value of betas.
@@ -405,24 +489,20 @@ def hyst(field,betas,neq,nstat=10,talk=True,avg=True,betaOut=True):
 	if isinstance(betas,tuple):	# convenience
 		betas = concatenate((arange(betas[0],betas[1],betas[2]),arange(betas[1],betas[0],-betas[2])))
 	en  = zeros(betas.shape)	# Energies
-	ven = zeros(betas.shape)	# Variance of energies
-	ens = zeros(nstat)			# This will store energies for computing statistics
+	sd = zeros(betas.shape)	# Standard deviation of energies
 	for i in range(len(betas)):
 		if talk: print("Step {} of {}".format(i,len(betas)))
 		field.B = betas[i]		# Update field temperature
 		field.sweep(ntimes=neq)		# Equilibrate the field
-		for j in range(nstat):	# Get statistics
-			field.sweep()
-			ens[j] = field.energy()
-		ven[i] = var(ens)
-		if avg:
-			en[i] = average(ens)
-		else:
-			en[i] = ens[-1]
+		if not mod(i,inc)==0: continue
+		en[i],sd[i] = field.stats(nstat,relax=relax,ret='ms')
+		if not avg:				# This means store the instantaneous energy, rather than average
+			en[i] = field.energy()
+	en = en[::inc]; sd = sd[::inc]; betas = betas[::inc];
 	if betaOut:
-		return en,ven,betas
+		return en,sd,betas
 	else:
-		return en,ven
+		return en,sd
 
 def watchSweep(field,stop=-1,talk=False):
 	"""Does a sweep and measures energy at each step along the way."""

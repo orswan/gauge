@@ -18,6 +18,33 @@ def multirange(t):
 	"""generates range of indices in multiple dimensions. t should be iterable."""
 	return itertools.product(*[range(i) for i in t])
 
+def incat(arr,*incs,f=tuple):
+	"""Call as incat(arr,(i,v),(j,w)...).  Increment arr[i]+=v, arr[j]+=w, etc."""
+	arr2 = array(arr).copy()
+	for i in incs:
+		arr2[i[0]]+=i[1]
+	return f(arr2)
+
+def vPlaqEdges(v,d1,d2):
+	"""Returns the plaquette edges corresponding to vertex v and directions d1 and d2."""
+	if d1<d2:
+		return (v+(d1,),incat(v,(d1,1))+(d2,),incat(v,(d2,1))+(d1,),v+(d2,))
+	elif d1>d2:
+		return (v+(d2,),incat(v,(d2,1))+(d1,),incat(v,(d1,1))+(d2,),v+(d1,))
+
+def ePlaqEdges(e,d,s):
+	"""Returns the plaquette edges corresponding to edge e, direction d, and sign s."""
+	if s==1:
+		if d>e[-1]:
+			return (e,incat(e,(e[-1],1),(-1,d-e[-1])),incat(e,(d,1)),incat(e,(-1,d-e[-1])))
+		elif d<e[-1]:
+			return (incat(e,(-1,d-e[-1])),incat(e,(d,1)),incat(e,(e[-1],1),(-1,d-e[-1])),e)
+	elif s==-1:
+		if d>e[-1]:
+			return (incat(e,(d,-1)),incat(e,(d,-1),(e[-1],1),(-1,d-e[-1])),e,incat(e,(d,-1),(-1,d-e[-1])))
+		elif d<e[-1]:
+			return (incat(e,(d,-1),(-1,d-e[-1])),e,incat(e,(d,-1),(e[-1],1),(-1,d-e[-1])),incat(e,(d,-1)))
+
 class Lattice:
 	"""A class for the underlying lattice of a field theory.
 		The lattice is defined by its shape, which is the 
@@ -35,7 +62,7 @@ class Lattice:
 		store data as objects by setting the 'obj' flag.
 		"""
 	
-	def __init__(self,shape,edtype=int,vdtype=int,care='e'):
+	def __init__(self,shape,edtype=int,vdtype=int,care='e',plaqarrays=True):
 		"""Initializes lattice.  init specifies how to set
 		the values of edges and vertices."""
 		self.edtype = edtype
@@ -50,6 +77,35 @@ class Lattice:
 		if edtype is not None:
 			self.__dict__['e'] = empty(shape+(len(shape),),dtype=edtype)
 			self.ef = ravel(self.e)					# flattened version for iterating over
+		
+		if plaqarrays:		# Generate arrays for quickly accessing plaquettes.  Potentially memory restrictive
+			# pv is an array of edge indices for all plaquettes, ordered by vertex and direction:
+			self.pv = empty(shape+(self.ndim,self.ndim,4),dtype=object)
+			for i in multirange(shape):
+				for j,k in multirange((self.ndim,self.ndim)):
+					if j==k: continue
+					"""
+					d1 = min(j,k); d2 = max(j,k);
+					self.pv[i+(j,k,0)] = i+(d1,)
+					self.pv[i+(j,k,1)] = incat(i,(d1,1))+(d2,)
+					self.pv[i+(j,k,2)] = incat(i,(d2,1))+(d1,)
+					self.pv[i+(j,k,3)] = i+(d2,)"""
+					self.pv[i+(j,k)] = vPlaqEdges(i,j,k)
+					for l in range(4):
+						self.pv[i+(j,k,l)] = tuple(mod(self.pv[i+(j,k,l)],shape+(self.ndim,)))
+			
+			# pe is an array of edge indices for all plaquettes, ordered by edge, direction, and sign.
+			# So indexing takes the form pe[edge,direction,sign,side of plaquette]
+			self.pe = empty(shape+(self.ndim,self.ndim,2,4),dtype=object)
+			for i in multirange(shape):
+				for dE,d in multirange((self.ndim,self.ndim)):
+					if dE==d: continue
+					for s in {-1,1}:
+						self.pe[i+(dE,d,(1-s)//2)] = ePlaqEdges(i+(dE,),d,s)
+						for j in range(4):
+							self.pe[i+(dE,d,(1-s)//2,j)] = tuple(mod(self.pe[i+(dE,d,(1-s)//2,j)],shape+(self.ndim,)))
+		
+		#################
 		
 		if care=='gauge':				# 'care' indicates whether we care primarily about edges or vertices
 			self.care  = self.e
@@ -352,7 +408,11 @@ class Field:
 		action = 0
 		# Removing the next four lines and replacing them with a faster alternative
 		if method==0: 
-			pass
+			for d in range(self.ndim):
+				if d==dE: continue
+				for s in {0,1}:
+					es = self.L.pe[E+(d,s)]
+					action += self.action(self.Prod( self.L.e[es[0]],self.L.e[es[1]],self.L.e[es[2]],self.L.e[es[3]] ))
 		if method==1:
 			for d in range(self.ndim):
 				if not d==dE:
@@ -424,14 +484,20 @@ class Field:
 				for j in multirange(self.eshape):
 					self.update(j)
 	
-	def energy(self):
+	def energy(self,method=2):
 		"""Energy per plaquette of the gauge theory for current configuration,
 			defined as just the total action (Hamiltonian) divided by
 			the number of edges."""
 		action = 0
-		for i in multirange(self.shape):
-			for j in itertools.combinations(range(self.ndim),2):
-				action += self.vplaquette(i,j[0],j[1],ret='a')
+		if method==1:
+			for i in multirange(self.shape):
+				for j in itertools.combinations(range(self.ndim),2):
+					action += self.vplaquette(i,j[0],j[1],ret='a')
+		elif method==2:
+			for i in multirange(self.shape):
+				for j in itertools.combinations(range(self.ndim),2):
+					es = self.L.pv[i+j]
+					action += self.action(self.Prod(self.L.e[es[0]],self.L.e[es[1]],self.L.e[es[2]],self.L.e[es[3]]))
 		action /= (self.L.nv*self.ndim*(self.ndim-1)/2)
 		return action
 	

@@ -167,7 +167,10 @@ Typical lattice gauge theory simulations are done on lattices having $\sim 10^4$
 
 So we have to come up with something else.  The something else is Monte Carlo simulation.  The basic idea is to sum not over all states, but rather over a representative subset.  In particular, recall that all the sums we want to do contain a Boltzmann weight $\exp(-\beta S[u])$.  For states where $S[u]$ is large compared to $1/\beta$, the Boltzmann weight is tiny, and that state doesn't contribute much to the sum.  So we don't need to pay as much attention to states with large action.  Conversely, we need to care a lot about states with small action.  The key idea of Monte Carlo simulation is to pick more of the states with small action than large action.  This is done by selecting states probabalistically, with the probability of selecting a given state proportional to its Boltzmann weight $\exp(-\beta S[u])$.  It can be proven that as we pick more and more states in this way, the sum over these states (which I'll call the ``Monte Carlo sum'') converges in a nice way to the sum over \textit{all} states, which is precisely what we want.  Crucially, the Monte Carlo sum involves a manageable number of states, so this technique is one we can deploy usefully on a computer. 
 
-
+More concretely, the algorithm for doing a Monte Carlo simulation of a lattice gauge theory is as follows:
+\begin{enumerate}
+\item 
+\end{enumerate}
 
 
 %%%%%%%%%% Bibliography

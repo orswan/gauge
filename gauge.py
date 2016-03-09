@@ -395,24 +395,29 @@ class Field:
 		return self.action(self.Prod(self.L.e[tuple(v0)+(d,)],self.L.e[tuple(v1)+(dE,)], 
 								self.L.e[tuple(v3)+(d,)], self.L.e[tuple(v0)+(dE,)]))
 	
-	def edgeAction(self,E,val=None,evf='e',method=2):
+	def edgeAction(self,E,val=None,evf='e',method=0):
 		"""Action contingent on edge E.
 			If supplied, val is substituted for the current value of edge E
 			in determining the action.  Otherwise self.e[E] is used. 
 			"""
 		dE = E[-1]		# Edge direction
-		v = list(E[:-1])		# Lower vertex of edge
-		for i in range(len(v)):	# This trick deals with periodicity
-			if v[i]==self.shape[i]-1:
-				v[i] = -1
+		#v = list(E[:-1])		# Lower vertex of edge
+		#for i in range(len(v)):	# This trick deals with periodicity
+		#	if v[i]==self.shape[i]-1:
+		#		v[i] = -1
 		action = 0
-		# Removing the next four lines and replacing them with a faster alternative
+		# Exploring faster variations
 		if method==0: 
+			if val is not None:
+				val0 = self.L.e[E]
+				self.L.e[E] = val
 			for d in range(self.ndim):
 				if d==dE: continue
 				for s in {0,1}:
 					es = self.L.pe[E+(d,s)]
 					action += self.action(self.Prod( self.L.e[es[0]],self.L.e[es[1]],self.L.e[es[2]],self.L.e[es[3]] ))
+			if val is not None:
+				self.L.e[E] = val0
 		if method==1:
 			for d in range(self.ndim):
 				if not d==dE:

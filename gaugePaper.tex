@@ -4,6 +4,31 @@
 \usepackage{bbm}
 \usepackage{mathtools}
 
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{%frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
 \begin{document}
 
 \title{Lattice Gauge Theories with Discrete Gauge Groups}
@@ -77,7 +102,7 @@ F(\beta)& := -\frac{d \log(Z)}{d\beta}\\
 \end{align*}
 That is, the free energy is the expectation value of the action.  Free energy in this form is extrinsic, so to get a statistic that doesn't grow with lattice size we look at the free energy per site $f(\beta):=F(\beta)/N$, where $N$ is the number of lattice sites.  This is one of the basic quantities of interest to us in this paper.  The other is the heat capacity 
 \begin{eqnarray*}
-C(\beta)& := & \frac{-1}{N}\frac{df}{d\beta}\\
+c(\beta)& := & \frac{-1}{N}\frac{df}{d\beta}\\
 & = & \frac{1}{N^2}\frac{1}{Z}  \prod_{z\in V(L)}\int d\phi(z) \: S_E[\phi]^2 \exp(-\beta S_E[\phi]) \\
 & & -\frac{1}{N^2}\frac{1}{Z^2} \left( \prod_{z\in V(L)}\int d\phi(z) \: S_E[\phi] \exp(-\beta S_E[\phi])\right)^2 \\
 & = & \frac{1}{N^2}\left(\left<S_E^2\right> - \left<S_E\right>^2\right)
@@ -112,7 +137,7 @@ u(e^1)u(e^2)\cdots u(e^k) \rightarrow  \\
 T(e_-^1)u(e^1)T(e_+^1)^{-1} T(e_-^2)u(e^2)T(e_+^2)^{-1} \cdots T(e_-^k)u(e^k)T(e_+^k)^{-1} \\ 
 =  T(e_-^1)u(e^1)u(e^2)\cdots u(e^k)T(e_+^k). 
 \end{multline*}
-The factors of $T(\cdot)$ in the middle of the transformed product all cancel, leaving just the terms for the endpoints of the path.  So such a product along a path is \textit{almost} gauge invariant!  However, note the above requirement $e_+^j=e_-^{j+1}$ restricts us to paths that only move from lower vertices to upper vertices (what we will call the ``forward'' direction) of each edge along the way.  In general we would like to be able to traverse an edge in either direction, forward or backward.  Such a general path we will write as $(\pm_1 e^1, \pm_2 e^2, \dots , \pm_k e^k)$, where a $+e^j$ means edge $e^j$ is traversed forward and a $-e^j$ means it is traversed backward (the subscripts on the $\pm$ signs are just labels to differentiate them).  For this to give a well-defined path we must have $e^j_{\pm_j} = e^{j+1}_{\mp_{j+1}}$ (where $\mp_j$ indicates the sign opposite to $\pm_j$).  To make an \textit{almost} gauge invariant quantity out of the values $u(e^j)$ along this path, we construct the product 
+The factors of $T(\cdot)$ in the middle of the transformed product all cancel, leaving just the factors for the endpoints of the path.  So such a product along a path is \textit{almost} gauge invariant!  However, note the above requirement $e_+^j=e_-^{j+1}$ restricts us to paths that only move from lower vertices to upper vertices (what we will call the ``forward'' direction) of each edge along the way.  In general we would like to be able to traverse an edge in either direction, forward or backward.  Such a general path we will write as $(\pm_1 e^1, \pm_2 e^2, \dots , \pm_k e^k)$, where a $+e^j$ means edge $e^j$ is traversed forward and a $-e^j$ means it is traversed backward (the subscripts on the $\pm$ signs are just labels to differentiate them).  For this to give a well-defined path we must have $e^j_{\pm_j} = e^{j+1}_{\mp_{j+1}}$ (where $\mp_j$ indicates the sign opposite to $\pm_j$).  To make an \textit{almost} gauge invariant quantity out of the values $u(e^j)$ along this path, we construct the product 
 \[P(\pm_1 e^1, \pm_2 e^2, \dots , \pm_k e^k) := u(e^1)^{\pm_1 1} u(e^2)^{\pm_2 1} \cdots u(e^k)^{\pm_k 1}.\]
 For example 
 \[P(-e^1,+e^2,\dots,+e^k) = u(e^1)^{-1} u(e^2)\cdots u(e^k).\]
@@ -143,7 +168,7 @@ In addition to gauge invariance, the conjugacy class $Cl( P(\pm_1 e^1,\dots,\pm_
 \end{eqnarray*}
 So the conjugacy class is a property of the loop itself, independent of the order in which we parametrize it.  We will thus sometimes abbreviate our notation and write $Cl(u,l)$ for the conjugacy class of the above product of $u$ around the edges of a loop $l$.  
 
-We are now in a position to describe the general form of a gauge invariant action (or observable) on fields $u$:  For any loop $l$, a \textit{loop operator} $A_l[u]$ is any function of $Cl(u,l)$.  Since $Cl(u,l)$ is gauge invariant, so is $A_l[u]$.  Furthermore, any composite function of multilple loop operators---e.g. the sum $A_{l_1}[u] + A_{l_2}[u]$ of two different loop operators---is also gauge invariant.  Such composite functions are what we will take as our operators and action.  It's that simple!
+We are now in a position to describe the general form of a gauge invariant action (or observable) on fields $u$:  For any loop $l$, a \textit{loop operator} $A_l[u]$ is any function of $Cl(u,l)$.  Since $Cl(u,l)$ is gauge invariant, so is $A_l[u]$.  Furthermore, any composite function of multiple loop operators---e.g. the sum $A_{l_1}[u] + A_{l_2}[u]$ of two different loop operators---is also gauge invariant.  Such composite functions are what we will take as our operators and action.  It's that simple!
 
 Having spelled out the general form of a gauge invariant action, we will now immediately specialize to the particular form of action which is most important.  (By ``most important'' I mean ``what everybody else is using''.)  The action $S[u]$ we will consider from here on is given by a sum over all \textit{plaquettes} $P$ (that is, square loops with one edge per side) of some real-valued function $s(Cl[u,P])$, where $s$ is an arbitrary real-valued function which I will call the \textit{plaquette action}.  The arbitrariness of $s$ means that this form of action is still quite broad.  When we start doing computations, we will explore different possibilities for the plaquette action.  However, it is also nice to have a certain standard form of plaquette action that we can use as a baseline, allowing us to make comparisons between different local symmetry groups $G$, for example.  To this end, define a baseline plaquette action $\delta(\cdot)$ by 
 
@@ -175,11 +200,102 @@ More concretely, the algorithm (that I use) for doing a Monte Carlo simulation o
 \item Repeat steps (1)-(3) (collectively known as the \textit{Metropolis algorithm}) for many edges $e$, either by going sequentially through each edge of the lattice, or else by just randomly picking many edges.  This is called a \textit{sweep} of the lattice.
 \item Do many such sweeps of the lattice.  Occasionally, record the values of\ any observables $A[u]$ you care about.  We'll call the recorded values $A_1,A_2,...,A_\#$.
 \end{enumerate}
-The important theorem (which we will not prove) is that as $\#\rightarrow \infty$, the average value $\frac{1}{\#} \sum_i A_i$ converges to the actual expectation value
-\[ \left<A\right> = \frac{1}{Z(\beta)}\prod_e \int du(e) A[u] \exp\left(-\beta S[u]\right),\]
-and the rate of convergence is of order $\mathcal{O}(\#^{-1/2})$.  More precisely, the standard deviation of the difference $\left(\frac{1}{\#} \sum_i A_i\right) - \left<A\right>$ is given by 
-\[\sqrt{\frac{\left<A^2\right>-\left<A\right>^2}{\#-1}} = \frac{\sigma_A}{\sqrt{\#-1}},\]
-which is just a consequence of the Law of Large Numbers.  Importantly, this error is \textit{independent} of the number of dimensions of the sum (that is, the number of edges of the lattice).  $\sigma_A$ is typically of order $\left<A\right>$ or smaller, so to get 1\% accuracy we need $\# \approx 10^4$, for any number of edges, to get 10\% accuracy, we need $\#\approx 100$, etc. 
+
+The only step of this algorithm that isn't fairly self-explanatory is (3), called the \textit{acceptance rule}.  The particular form of this acceptance rule is chosen so that the new field configurations $u$ produced by this algorithm occur with a probability proportional to their Boltzmann weight $\exp(-\beta S[u])$.
+
+The important theorem (which we will not prove) is that as $\#\rightarrow \infty$, the average value $\frac{1}{\#} \sum_i A_i$ (what I call the Monte Carlo sum) converges to the actual expectation value
+\[ \left<A\right> = \frac{1}{Z(\beta)}\prod_e \int du(e) A[u] \exp\left(-\beta S[u]\right).\]
+
+(Note that the Monte Carlo sum $\frac{1}{\#} \sum_i A_i$ doesn't contain the exponential weighting factor.  This is because the Metropolis algorithm picks states in proportion to their Boltzmann weight, so the set of values $\{A_i\}$ already has this weighting ``built in''.)  The value of the Monte Carlo sum we get from any particular simulation is randomly distributed around the true expectation value $\left<A\right>$, with a standard deviation $\sigma_{MC}$ of the form 
+\begin{equation}
+\sigma_{MC} \sim \sqrt{\frac{\left<A^2\right>-\left<A\right>^2}{\#-1}} = \frac{\sigma_A}{\sqrt{\#-1}},
+\end{equation}
+where $\sigma_A$ is the true standard deviation of $A$ over all field configurations $u$.  The $1/\sqrt{\#-1}$ in this formula comes from the Law of Large Numbers, and tells you how big you need to make $\#$ to get a desired level of accuracy:  $\sigma_A$ is typically of order $\left<A\right>$ or smaller, so to get 1\% accuracy we need $\# \approx 10^4$, to get 10\% accuracy, we need $\#\approx 100$, etc.  Crucially, this is \textit{independent of the dimension of the sum!}  (That is, independent of the number of edges in the lattice.)
+
+One technical issue in the above Monte Carlo method is that, since new states are generated as modifications of previous states, there may be correlations from one state to the next.  This is why, in the final step, I said to record values of the operators \textit{occationally}, rather than after every change of state.  The number of sweeps between recording values of the operators should be longer than the ``relaxation time'' of the system, i.e. the number of sweeps needed to decorrelate the new state from an old one.  Usually this is not a big deal---a sweep or two will typically suffice to decorrelate the system.  
+
+\subsection{Metrics for Monte Carlo}
+As mentioned previously, the main quantity of interest to us here are the free energy per degree of freedom (that is, per plaquette),
+\[f(\beta) = \left<\frac{S}{N}\right> = \frac{1}{N}\frac{1}{Z} \prod_{e\in E(L)} \int du(e) S[u] exp(-\beta S[u]). \]
+We'll also look at the heat capacity 
+\[c(\beta) = \left<\frac{S^2}{N^2}\right> - \left< \frac{S}{N}\right>^2,\]
+but it's harder to get good statistics for heat capacity than it is for free energy (variance converges slower than mean).  
+
+So our general program is to set the inverse temperature $\beta$ to various values and evaluate these observables.  What we're looking for is primarily phase transitions, which can be signaled by abrupt changes in the free energy or spikes in the heat capacity at the critical temperature.  Another useful way to find phase transitions is to sweep the system from low temperature to high temperature and back (or from high to low and back).  It often happens that near a phase transition (especially a first order phase tranition) there are multilple distinct metastable states of the system, some corresponding to the low temperature phase and others to the high temperature phase.  When the system's temperature is tuned to criticality, it tends to track different metastable states depending on whether it was brought from low or high temperature, resulting in \textit{hysteresis} when the temperature is swept back and forth.  These hysteresis cycles are in some sense a failure to equilibrate properly near the phase transition.  However, this is a ``bug that's a feature'', since it provides a good way of \textit{finding} phase transitions.  This technique will be one of our main tools.  
+
+Once we've tenatively identified a phase transition temperature, we can zero in on it by the following protocol:  Choose an initial field $u$ such that on one half of the lattice $u$ is uniformly the group identity, and on the other half it is completely (uniformly) random.  The two halves of the lattice roughly correspond to low and high temperature states, respectively, so the overall field configuration can be considered as having a phase boundary.  If we then set the temperature of the field below the critical temperature, the low temperature phase will overtake the high temperature phase, and the energy of the system will decrease as we equilibrate the field (sweep the lattice).  Similarly, above the critical temperature the energy will increase with equilibration.  Note that this is essentially just a fancy way of defeating the metastability characteristic of the region around the phase transition.  The relative merit of this method (which I'll call the ``phase boundary method'') vs. the hysteresis method is only apparent from trying them both and seeing how they work.  It turns out that the phase boundary method gives a more precise measure of transition temperatures than the hysteresis method.  We'll use both.  
+
+There are various other useful ways to look at the state of a Monte Carlo simulation, too: You can look at the action around some particular loop; you can count the occurances of a particular group element; or you can just look pictures of the lattice.  We'll resort to these options from time to time.  
+
+\section{Gauge.py}
+I've implemented a general-purpose LGT simulator in python, dubbed gauge.py.  The basic structure of the code is encapsulated in three classes: 
+\begin{itemize}
+\item A Lattice class that contains a few arrays representing the lattice.  The most important array is for the edges of the lattice, since that's where the gauge field $u$ lives, and this is where the actual values $u(e)$ for each edge $e$ are stored.  This array has shape $(m_1,m_2,...,m_n,n)$, where $n$ is the number of dimensions of the lattice and $m_j$ is the lattice size in dimension $j$.  As implemented, $n$ is arbitrary, but there's not much point in making $n<2$, and you're pushing your luck to try anything bigger than about $n=4$, unless you have a lot of spare petaflops lying around.  (I did try $n=5$ with a 5 by 5 by 5 by 5 by 5 lattice.  It worked.  High five!) 
+
+In the present code, I also have arrays for addressing plaquettes, either from the ``lower left'' vertex and two directions, or from an edge and a second direction.  These provide a slightly faster way of finding the plaquettes, at the expense of additional memory overhead. 
+\item A Group class allows the specification of arbitrary groups by their multiplication table.  Group elements are labeled by integers $0,1,2,...,|G|-1$, and to specify the group structure you provide a matrix $M$ such that $M[a,b]$ is the integer label for the product $a\cdot b$ (we are muddying the distinction here between group elements and integer labels for those group elements, but hopefully you get the idea).  The virtue to doing things this way is that the field $u$ can now be represented as just an array of integers (rather than something like an array of objects, which would be more voluminous and slower to access).  Then to compute products of group elements we just index the multiplication table, which is stored in the Group object. 
+\item A Field class which envelops both a Group object and a Lattice object, and provides the needed functions for Monte Carlo sweeps of the lattice and computing values of observables (mainly the action).  In addition to the Group and Lattice, the Field object also needs to know a plaquette action, which is supplied as a function acting on the integer labels of your group elements.  (Recall that actions in LGTs are supposed to be functions of \textit{conjugacy classes} of group elements.  This you must do ``by hand'' for any given action, by simply ensuring that whatever action you define takes the same values on all elements of a conjugacy class.)  The baseline plaquette action is typically given by something like 
+\begin{lstlisting}
+action = lambda x : float(x!=0)
+\end{lstlisting}
+\end{itemize}
+(Feel free to ignore the Python if you are not conversant.)
+
+Most of the run time of the code is spent on two tasks: sweeping the lattice, and computing the action.  A typical lattice has size shape (7,7,7,7), giving 2401 vertices and 9604 edges.  At such sizes, a single sweep or action computation can take times on the order of a second.  The standard program is to set the temperature of the Field, sweep several times to equilibrate, and then repeatedly measure the action and sweep several times to decorrelate successive measurements.  Typically this procedure takes several minutes per temperature.
+
+[A remark on avenues for improvement: Both of the two computationally intensive tasks mentioned above are amenable to parallelization.  Given that Python is inherently slow at looping anyway (which is essentially what sweeps and action computations boil down to), I expect great speedups could be achieved by using something like CUDA to do the heavy lifting of this program.]
+
+I don't know a good way to figure out theoretically what sort of equilibration and relaxation times are needed, but it's easy to see by eye in the simulations.  For example, if I set the field values to be uniformly the group identity element and equilibrate the system at high temperature, I find that it only takes about 1 or 2 sweeps for the action to reach its equilibrium value.  Near the critical point it can take many more sweeps (maybe 10 to 15) to equilibrate, which has the same origin as the hysteresis effect we mentioned earlier.  Based on these observations, we will typically do 2 to 10 sweeps to relax or equilibrate the system.  
+
+\section{Results}
+I've done simulations for various discrete local symmetry groups: the cyclic groups $\mathbb{Z}_N$ for various values of $N$, the Klein 4-group $K_4$, and the quaternion group $Q$.  We'll examine each of these cases separately.
+
+\subsection{$\mathbb{Z}_N$}
+$\mathbb{Z}_N$ is just the group of integers (mod N), with addition as the group operation.  An isomorphic description is as set of $N^{th}$ roots of unity, with the group operation being multiplication of complex numbers.  This group is Abelian, so each element is in a conjugacy class by itself, and thus any function on the group is a candidate plaquette action.  In addition to the baseline plaquette action, another plaquette action of interest is given by 
+\[s(j) = 1-\cos\left(\frac{2\pi j}{N}\right) = 1 - \Re{\left\{ e^{2\pi i j/N} \right\}},\]
+where we are representing group elements by $j=0,1,...,N-1$.  The reason this is interesting is that, in the limit as $N\rightarrow \infty$, it reduces to the plaquette action for a $U(1)$ gauge theory (as arises in e.g. lattice quantum electrodynamics).  We won't look at $U(1)$, but we will look at this alternative action. 
+
+We start with the simplest case: $\mathbb{Z}_2$ in 2 dimensions.  Note that for $\mathbb{Z}_2$ the baseline action and the alternative action mentioned above are essentially the same, up to an overall energy scaling.  So we will only consider the baseline action.  Sweeping from $\beta=0$ to $\beta=2$ and back (in 80 steps each way) yields the phase diagram (average plaquette energy vs. $\beta$) of fig. (\ref{z2,2d}).
+\begin{figure}[h!]
+	\begin{centering}
+	\includegraphics[width=\columnwidth]{z2,2d}
+	\caption[$\mathbb{Z}_2$ lattice gauge theory phase diagram for a 2D lattice.]{$\mathbb{Z}_2$ lattice gauge theory phase diagram for a 2D, 15 by 15 lattice.  There are no phase transitions.}
+	\label{z2,2d}
+	\end{centering}
+\end{figure}
+
+This has the expected coarse structure---high energy at high temperature (low $\beta$) and low energy at low temperature---but there is no apparent structure, i.e. no apparent phase transition.  This is good, because 2D $\mathbb{Z}_2$ LGT is known analytically to have no phase transition (just a single disordered phase).  Actually, this is the case for all of our gauge groups, so I won't bother to show any more phase diagrams for 2D lattices.  It's good to see one, though, as a sanity check.  
+
+In 3D, we have the phase diagram shown in fig. (\ref{z2,3d}).
+\begin{figure}[h!]
+	\begin{centering}
+	\includegraphics[width=\columnwidth]{z2,3d}
+	\caption[$\mathbb{Z}_2$ lattice gauge theory phase diagram for a 3D lattice.]{$\mathbb{Z}_2$ phase diagram for a 3D, 7 by 7 by 7 lattice.  The drop at around $\beta=1.5$ betrays a phase transition there.}
+	\label{z2,3d}
+	\end{centering}
+\end{figure}
+This time, we see clear structure---a sharp drop---around $\beta=1.5$, indicating a phase transition.  However, there does not appear to be substantial hysteresis around this phase transition (you'll know what I mean by ``substantial hysteresis'' when you see the higher dimensional LGT phase diagrams).  What we have discovered is that the phase transition of this lattice gauge theory is \textit{continuous}.  This fact is also known analytically: the 3D $\mathbb{Z}_2$ lattice gauge theory is exactly dual to the 3D Ising model, and the since the latter has a continuous phase transition, so must this LGT.
+
+Proceeding to 4D, we now see clearly a hysteresis loop at $\beta \approx .9$, as shown in fig. (\ref{z2,4d}).
+\begin{figure}[h!]
+	\begin{centering}
+	\includegraphics[width=\columnwidth]{z2,4d}
+	\caption{$\mathbb{Z}_2$ phase diagram for a 4D, 5 by 5 by 5 by 5 lattice.  The hysteresis loop betrays a phase transition at around 1.4.}
+	\label{z2,4d}
+	\end{centering}
+\end{figure}
+We can zero in on this phase transition using the phase boundary method, the results of which are shown in fig. (\ref{z2,4d,phase}).
+\begin{figure}[h!]
+	\begin{centering}
+	\includegraphics[width=\columnwidth]{z2,4d,phase}
+	\caption{The phase transition region for $\mathbb{Z}_2$ LGT on a 4D, 5 by 5 by 5 by 5 lattice, using the phase boundary method.}
+	\label{z2,4d,phase}
+	\end{centering}
+\end{figure}
+From this we can pin the critical point at around $\beta= .88$. 
+
+
+
 
 %%%%%%%%%% Bibliography
 

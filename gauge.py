@@ -460,8 +460,8 @@ class Field:
 		'''Updates site i.'''
 		if evf=='e':
 			newg = randint(0,self.G.size)
-			while newg==self.L.e[i]:
-				newg = randint(0,self.G.size)
+			#while newg==self.L.e[i]:
+			#	newg = randint(0,self.G.size)
 			if self.accept(self.edgeAction(i),self.edgeAction(i,newg),self.B):
 				self.L.e[i] = newg
 	
@@ -506,7 +506,7 @@ class Field:
 		action /= (self.L.nv*self.ndim*(self.ndim-1)/2)
 		return action
 	
-	def stats(self,n,relax=1,ret='ms'):
+	def stats(self,n,relax=1,ret='ms2'):
 		"""Gets mean energy and standard deviation by sweeping n*relax times and 
 			accumulating energies every relax number of steps.
 			(The name relax is a reference to relaxation time.)"""
@@ -519,6 +519,8 @@ class Field:
 		for i in ret:
 			if i=='m':
 				out.append(mean(en))
+			elif i=='2':
+				out.append(mean(en**2))
 			elif i=='s':
 				out.append(std(en))
 			elif i=='v':
@@ -560,13 +562,14 @@ def hyst(field,betas,neq=2,nstat=10,relax=10,inc=10,talk=True,avg=True,betaOut=T
 	if isinstance(betas,tuple):	# convenience
 		betas = concatenate((arange(betas[0],betas[1],betas[2]),arange(betas[1],betas[0],-betas[2])))
 	en  = zeros(betas.shape)	# Energies
-	sd = zeros(betas.shape)	# Standard deviation of energies
+	en2 = zeros(betas.shape)	# Squared energies
+	sd = zeros(betas.shape)		# Standard deviation of energies
 	for i in range(len(betas)):
 		if talk: print("Step {} of {}".format(i,len(betas)))
 		field.B = betas[i]		# Update field temperature
 		field.sweep(ntimes=neq)		# Equilibrate the field
 		if not mod(i,inc)==0: continue
-		en[i],sd[i] = field.stats(nstat,relax=relax,ret='ms')
+		en[i],en2[i],sd[i] = field.stats(nstat,relax=relax,ret='m2s')
 		if not avg:				# This means store the instantaneous energy, rather than average
 			en[i] = field.energy()
 	en = en[::inc]; sd = sd[::inc]; betas = betas[::inc];
@@ -575,13 +578,15 @@ def hyst(field,betas,neq=2,nstat=10,relax=10,inc=10,talk=True,avg=True,betaOut=T
 	else:
 		return en,sd
 
-def phaseSweep(field,betas,inc=1,nsweeps=400):
+def phaseSweep(field,betas,inc=1,nsweeps=400,talk=True):
 	"""For beta values in betas, start from configuration of half random and half 
 		the group identity and evolve nsweeps sweeps, recording energy every inc steps.
 		"""
-	en = zeros(len(betas),1+nsweeps//inc)
+	en = zeros((len(betas),1+nsweeps//inc))
 	for i in range(len(betas)):
+		if talk: print("On beta={}".format(betas[i]))
 		field.initialize('half')
+		field.B = betas[i]
 		en[i,0] = field.energy()
 		for j in range(nsweeps):
 			field.sweep()

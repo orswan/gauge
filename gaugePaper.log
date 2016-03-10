@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2016.2.14)  9 MAR 2016 13:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2016.2.14)  10 MAR 2016 03:05
 entering extended mode
 **C:/Users/swan/Desktop/classes/gauge/gaugePaper.tex
 (C:/Users/swan/Desktop/classes/gauge/gaugePaper.tex
@@ -133,6 +133,53 @@ LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
 \l_MT_above_shortintertext_sep=\dimen119
 \l_MT_below_shortintertext_sep=\dimen120
 )
+(C:\Users\swan\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\listings.sty
+\lst@mode=\count103
+\lst@gtempboxa=\box28
+\lst@token=\toks20
+\lst@length=\count104
+\lst@currlwidth=\dimen121
+\lst@column=\count105
+\lst@pos=\count106
+\lst@lostspace=\dimen122
+\lst@width=\dimen123
+\lst@newlines=\count107
+\lst@lineno=\count108
+\lst@maxwidth=\dimen124
+
+(C:\Users\swan\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\lstmisc.sty
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+\c@lstnumber=\count109
+\lst@skipnumbers=\count110
+\lst@framebox=\box29
+)
+(C:\Users\swan\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\listings.cfg
+File: listings.cfg 2015/06/04 1.6 listings configuration
+))
+Package: listings 2015/06/04 1.6 (Carsten Heinz)
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\color.sty"
+Package: color 2014/10/28 v1.1a Standard LaTeX Color (DPC)
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: pdftex.def on input line 142.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count111
+))
+(C:\Users\swan\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\lstlang1.sty
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
 
 LaTeX Warning: Unused global option(s):
     [9pt].
@@ -140,18 +187,18 @@ LaTeX Warning: Unused global option(s):
 (gaugePaper.aux)
 \openout1 = `gaugePaper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
 Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
@@ -166,40 +213,31 @@ Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
 )
 Package graphics Info: Driver file: pdftex.def on input line 94.
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
-File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
-Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
-Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+\Gin@req@height=\dimen125
+\Gin@req@width=\dimen126
 )
-\Gread@gobject=\count103
+\c@lstlisting=\count112
 
 (C:\Users\swan\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count104
-\scratchdimen=\dimen121
-\scratchbox=\box28
-\nofMPsegments=\count105
-\nofMParguments=\count106
-\everyMPshowfont=\toks20
-\MPscratchCnt=\count107
-\MPscratchDim=\dimen122
-\MPnumerator=\count108
-\makeMPintoPDFobject=\count109
-\everyMPtoPDFconversion=\toks21
-)))
-\Gin@req@height=\dimen123
-\Gin@req@width=\dimen124
+\scratchcounter=\count113
+\scratchdimen=\dimen127
+\scratchbox=\box30
+\nofMPsegments=\count114
+\nofMParguments=\count115
+\everyMPshowfont=\toks21
+\MPscratchCnt=\count116
+\MPscratchDim=\dimen128
+\MPnumerator=\count117
+\makeMPintoPDFobject=\count118
+\everyMPtoPDFconversion=\toks22
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 12.
+LaTeX Font Info:    Try loading font information for U+msa on input line 37.
  ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 12.
+LaTeX Font Info:    Try loading font information for U+msb on input line 37.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -210,45 +248,45 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 ]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 34.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 59.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 34.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 59.
  [2] [3]
-Overfull \hbox (8.93584pt too wide) detected at line 68
+Overfull \hbox (8.93584pt too wide) detected at line 93
 [] \OMS/cmsy/m/n/10 ! []
  []
 
 
-Overfull \hbox (41.1669pt too wide) in alignment at lines 79--84
+Overfull \hbox (37.63197pt too wide) in alignment at lines 104--109
  [][][] []
  []
 
 [4]
-Underfull \hbox (badness 7186) in paragraph at lines 96--97
+Underfull \hbox (badness 7186) in paragraph at lines 121--122
 []\OT1/cmr/m/n/10 An ac-tion $\OML/cmm/m/it/10 S\OT1/cmr/m/n/10 [\OMS/cmsy/m/n/
 10 f\OML/cmm/m/it/10 u[]\OMS/cmsy/m/n/10 g\OT1/cmr/m/n/10 ]$ and some ob-serv-a
 bles
  []
 
 
-Underfull \hbox (badness 1253) in paragraph at lines 96--97
+Underfull \hbox (badness 1253) in paragraph at lines 121--122
 $\OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 A\OT1/cmr/m/n/10 [\OMS/cmsy/m/n/10 f\OML/cm
 m/m/it/10 u[]\OMS/cmsy/m/n/10 g\OT1/cmr/m/n/10 ]\OMS/cmsy/m/n/10 g$\OT1/cmr/m/n
 /10 , which should be in-vari-ant un-der
  []
 
 
-Underfull \hbox (badness 4899) in paragraph at lines 109--110
+Underfull \hbox (badness 4899) in paragraph at lines 134--135
 []\OT1/cmr/m/n/10 To see what kinds of func-tions of $\OML/cmm/m/it/10 u$ \OT1/
 cmr/m/it/10 are
  []
 
 
-Overfull \hbox (44.24376pt too wide) detected at line 114
+Overfull \hbox (44.24376pt too wide) detected at line 139
  []$[]\OML/cmm/m/it/10 T\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 e[]\OT1/cmr/m/n/10 )\
 OML/cmm/m/it/10 u\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 e[]\OT1/cmr/m/n/10 )\OML/cmm
 /m/it/10 T\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 e[]\OT1/cmr/m/n/10 )[]\OML/cmm/m/it
@@ -261,7 +299,7 @@ m/m/it/10 e[]\OT1/cmr/m/n/10 )[]$
  []
 
 
-Overfull \hbox (24.48305pt too wide) detected at line 116
+Overfull \hbox (24.48305pt too wide) detected at line 141
 \OML/cmm/m/it/10 P\OT1/cmr/m/n/10 (\OMS/cmsy/m/n/10 []\OML/cmm/m/it/10 e[]; \O
 MS/cmsy/m/n/10 []\OML/cmm/m/it/10 e[]; [] ; \OMS/cmsy/m/n/10 []\OML/cmm/m/it/
 10 e[]\OT1/cmr/m/n/10 ) := \OML/cmm/m/it/10 u\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 
@@ -271,23 +309,23 @@ T1/cmr/m/n/10 )[] [] \OML/cmm/m/it/10 u\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 e[]\OT
  []
 
 [5]
-Underfull \hbox (badness 3895) in paragraph at lines 128--129
+Underfull \hbox (badness 3895) in paragraph at lines 153--154
 []\OT1/cmr/m/n/10 Now there's some bad news: For a path
  []
 
 
-Underfull \hbox (badness 1077) in paragraph at lines 134--135
+Underfull \hbox (badness 1077) in paragraph at lines 159--160
 \OT1/cmr/m/n/10 low the value of the prod-uct to be com-pletely
  []
 
 
-Underfull \hbox (badness 3679) in paragraph at lines 134--135
+Underfull \hbox (badness 3679) in paragraph at lines 159--160
 \OT1/cmr/m/n/10 ar-bi-trary. For ex-am-ple, if the group $\OML/cmm/m/it/10 G$ \
 OT1/cmr/m/n/10 is
  []
 
 
-Underfull \hbox (badness 1270) in paragraph at lines 134--135
+Underfull \hbox (badness 1270) in paragraph at lines 159--160
 \OT1/cmr/m/n/10 Abelian, then $\OML/cmm/m/it/10 T\OT1/cmr/m/n/10 (\OML/cmm/m/it
 /10 v[]\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 P\OT1/cmr/m/n/10 (\OMS/cmsy/m/n/10 []
 \OML/cmm/m/it/10 e[]; [] ; \OMS/cmsy/m/n/10 []\OML/cmm/m/it/10 e[]\OT1/cmr/m/n
@@ -295,25 +333,72 @@ Underfull \hbox (badness 1270) in paragraph at lines 134--135
  =$
  []
 
-LaTeX Font Info:    Try loading font information for U+bbm on input line 153.
+LaTeX Font Info:    Try loading font information for U+bbm on input line 178.
 (C:\Users\swan\AppData\Roaming\MiKTeX\2.9\tex\latex\bbm\ubbm.fd
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
 ) [6] [7]
+Overfull \hbox (6.52744pt too wide) detected at line 219
+\OML/cmm/m/it/10 f\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 \OT1/cmr/m/n/10 ) = [] = [
+][] [] [] \OML/cmm/m/it/10 du\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 e\OT1/cmr/m/n/10
+ )\OML/cmm/m/it/10 S\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 u\OT1/cmr/m/n/10 ]\OML/cm
+m/m/it/10 exp\OT1/cmr/m/n/10 (\OMS/cmsy/m/n/10  \OML/cmm/m/it/10 S\OT1/cmr/m/n
+/10 [\OML/cmm/m/it/10 u\OT1/cmr/m/n/10 ])\OML/cmm/m/it/10 :
+ []
+
+[8]
+Underfull \hbox (badness 3260) in paragraph at lines 236--237
+[]\OT1/cmr/m/n/10 A Group class al-lows the spec-i-fi-ca-tion of
+ []
+
+
+Underfull \hbox (badness 1466) in paragraph at lines 236--237
+\OT1/cmr/m/n/10 ar-bi-trary groups by their mul-ti-pli-ca-tion ta-
+ []
+
+[9] <z2,2d.png, id=47, 578.16pt x 431.4519pt>
+File: z2,2d.png Graphic file (type png)
+ <use z2,2d.png>
+Package pdftex.def Info: z2,2d.png used on input line 261.
+(pdftex.def)             Requested size: 229.5pt x 171.26102pt.
+ [10 <./z2,2d.png>] <z2,3d.png, id=54, 578.16pt x 431.4519pt>
+File: z2,3d.png Graphic file (type png)
+ <use z2,3d.png>
+Package pdftex.def Info: z2,3d.png used on input line 272.
+(pdftex.def)             Requested size: 229.5pt x 171.26102pt.
+
+<z2,4d.png, id=55, 578.16pt x 431.4519pt>
+File: z2,4d.png Graphic file (type png)
+ <use z2,4d.png>
+Package pdftex.def Info: z2,4d.png used on input line 282.
+(pdftex.def)             Requested size: 229.5pt x 171.26102pt.
+
+<z2,4d,phase.png, id=56, 578.16pt x 431.4519pt>
+File: z2,4d,phase.png Graphic file (type png)
+ <use z2,4d,phase.png>
+Package pdftex.def Info: z2,4d,phase.png used on input line 290.
+(pdftex.def)             Requested size: 229.5pt x 171.26102pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[11 <./z2,3d.png> <./z2,4d.png> <./z2,4d,phase.png>]
 Missing character: There is no â in font cmr10!
 Missing character: There is no € in font cmr10!
 Missing character: There is no ™ in font cmr10!
-
-[8
+ [12
 
 ] (gaugePaper.aux) ) 
 Here is how much of TeX's memory you used:
- 2625 strings out of 493634
- 35788 string characters out of 3141317
- 102737 words of memory out of 3000000
- 5990 multiletter control sequences out of 15000+200000
- 12244 words of font info for 49 fonts, out of 3000000 for 9000
+ 4076 strings out of 493634
+ 56622 string characters out of 3141317
+ 148392 words of memory out of 3000000
+ 7411 multiletter control sequences out of 15000+200000
+ 13105 words of font info for 54 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 29i,9n,26p,1550b,221s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,9n,40p,1550b,1117s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\swan\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\pu
 blic\bbm\dpi600\bbm10.pk><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/
 amsfonts/cm/cmbx10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/am
@@ -322,17 +407,19 @@ onts/cm/cmex10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfon
 ts/cm/cmmi10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts
 /cm/cmmi5.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
 /cmmi7.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
-r10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12
-.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pf
-b><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><C
-:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Pr
-ogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Prog
-ram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program
- Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program F
-iles (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on gaugePaper.pdf (8 pages, 220116 bytes).
+mi8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10
+.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pf
+b><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><
+C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/P
+rogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Progr
+am Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program
+ Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Fi
+les (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program File
+s (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt9.pfb><C:/Program Files (
+x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on gaugePaper.pdf (12 pages, 405512 bytes).
 PDF statistics:
- 94 PDF objects out of 1000 (max. 8388607)
+ 123 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

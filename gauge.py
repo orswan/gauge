@@ -575,6 +575,20 @@ def hyst(field,betas,neq=2,nstat=10,relax=10,inc=10,talk=True,avg=True,betaOut=T
 	else:
 		return en,sd
 
+def phaseSweep(field,betas,inc=1,nsweeps=400):
+	"""For beta values in betas, start from configuration of half random and half 
+		the group identity and evolve nsweeps sweeps, recording energy every inc steps.
+		"""
+	en = zeros(len(betas),1+nsweeps//inc)
+	for i in range(len(betas)):
+		field.initialize('half')
+		en[i,0] = field.energy()
+		for j in range(nsweeps):
+			field.sweep()
+			if mod(j+1,inc)==0:
+				en[i,(j+1)//inc] = field.energy()
+	return en
+
 def watchSweep(field,stop=-1,talk=False):
 	"""Does a sweep and measures energy at each step along the way."""
 	en = zeros(product(field.eshape)+1)

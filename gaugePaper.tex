@@ -3,6 +3,9 @@
 \usepackage{amssymb}
 \usepackage{bbm}
 \usepackage{mathtools}
+\usepackage{afterpage}
+\usepackage{graphicx}
+\usepackage{subfigure}
 
 \usepackage{listings}
 \usepackage{color}
@@ -187,6 +190,9 @@ where the sum is over all plaquettes.  With this action in hand we now have a fu
 
 Let me dwell on this last remark a bit: We have just constructed a lattice gauge theory for totally arbitrary local symmetry group $G$.  In particular, $G$ may be discrete.  This is in stark contrast to continuum gauge theories, where local symmetry groups are always continuous.  This is because of the requirement that gauge transformations be smooth, and thus continuous.  Any continuous function of a connected space (such as $\mathbb{R}^n$) into a discrete space must be constant, so a gauge transformation coming from a discrete local symmetry group must be constant, i.e. a global symmetry.  Gauge transformations on a lattice do not have this restriction, because a lattices are not connected.  This means we have lots of gauge theories on lattices that have no analog in the continuum.  These are the sorts of LGTs we will explore below. 
 
+\subsection{A note on gauge invariance and partition functions}
+A technical point I have hitherto not mentioned is that, in gauge theories, the philosophy is to consider all field configurations which can be mapped into each other by a gauge transformation as \textit{the same state}.  This means that, technically, the states of our systems are equivalence classes of fields $u$ modulo the gauge group action.  Thus, the principled way of writing a quantity like the partition function is to sum, not over all fields $u$, but rather over all equivalence classes of fields, or equivalently over one field for each equivalence class.  There are ways to implement this (gauge fixing), but it turns out not to make any difference for the quantities we're interested in.  The reason is that, since all observables take the same value on any two gauge-equivalent fields, summing over all fields is the same as summing over all equivalence classes of fields $|\mathcal{G}|$ times ($|\mathcal{G}|$ being the gauge group size, or more generally the gauge group measure for continuous groups).  Since the observables we're interested in have two sums over states, one in the numerator and one in the denominator, this overall constant cancels, and we get the same result from summing over fields or summing over equivalence classes.  When we do simulations, we will sum over all fields, because this turns out to be easier to implement.
+
 \section{Monte Carlo techniques}
 Typical lattice gauge theory simulations are done on lattices having $\sim 10^4$ vertices, and comparable numbers of edges (to be precise, for a rectangular lattice the number of edges equals the number of vertices times the dimension of the lattice).  For the smallest local symmetry group imaginable, $\mathbb{Z}_2$, this means the number of field configurations to sum over is $\sim 2^{10^4}\sim 10^{3010}\sim$ googol$^{30}$.  This is a bigger sum than most people can do in their head, even with a good night's sleep.  This is a bigger sum than most people can do on their laptop, even with Python.  This is a bigger sum than most people can do on a supercomputer, even with a very generous grant.  
 
@@ -252,10 +258,10 @@ I've done simulations for various discrete local symmetry groups: the cyclic gro
 
 \subsection{$\mathbb{Z}_N$}
 $\mathbb{Z}_N$ is just the group of integers (mod N), with addition as the group operation.  An isomorphic description is as set of $N^{th}$ roots of unity, with the group operation being multiplication of complex numbers.  This group is Abelian, so each element is in a conjugacy class by itself, and thus any function on the group is a candidate plaquette action.  In addition to the baseline plaquette action, another plaquette action of interest is given by 
-\[s(j) = 1-\cos\left(\frac{2\pi j}{N}\right) = 1 - \Re{\left\{ e^{2\pi i j/N} \right\}},\]
-where we are representing group elements by $j=0,1,...,N-1$.  The reason this is interesting is that, in the limit as $N\rightarrow \infty$, it reduces to the plaquette action for a $U(1)$ gauge theory (as arises in e.g. lattice quantum electrodynamics).  We won't look at $U(1)$, but we will look at this alternative action. 
+\[s(j) = \frac{1}{2}\left(1-\cos\left(\frac{2\pi j}{N}\right)\right) = \frac{1}{2}\left(1 - \Re{\left\{ e^{2\pi i j/N} \right\}}\right),\]
+where we are representing group elements by $j=0,1,...,N-1$.  The factor of $frac{1}{2}$ is chosen to make this action take values in the range $[0,1]$, so that it is more directly comparable to the baseline action (which takes value in the same range).  The reason this alternative action is interesting is that, in the limit as $N\rightarrow \infty$, it reduces to the plaquette action for a $U(1)$ gauge theory (as arises in e.g. lattice quantum electrodynamics).  We won't look at $U(1)$, but we will look at this alternative action.  
 
-We start with the simplest case: $\mathbb{Z}_2$ in 2 dimensions.  Note that for $\mathbb{Z}_2$ the baseline action and the alternative action mentioned above are essentially the same, up to an overall energy scaling.  So we will only consider the baseline action.  Sweeping from $\beta=0$ to $\beta=2$ and back (in 80 steps each way) yields the phase diagram (average plaquette energy vs. $\beta$) of fig. (\ref{z2,2d}).
+We start with the simplest case: $\mathbb{Z}_2$ in 2 dimensions.  Note that for $\mathbb{Z}_2$ the baseline action and the alternative action mentioned above are identical, so we will only mention the baseline action.  Sweeping from $\beta=0$ to $\beta=2$ and back (in 80 steps each way) yields the phase diagram (average plaquette energy vs. $\beta$) of fig. (\ref{z2,2d}).
 \begin{figure}[h!]
 	\begin{centering}
 	\includegraphics[width=\columnwidth]{z2,2d}
@@ -292,10 +298,102 @@ We can zero in on this phase transition using the phase boundary method, the res
 	\label{z2,4d,phase}
 	\end{centering}
 \end{figure}
-From this we can pin the critical point at around $\beta= .88$. 
 
+The phase boundary method pins the critical point at around $\beta= .88$.  In principle, we can attain still better accuracy by this method by looking at more values of $\beta$ and more sweeps (unlike the hysteresis loops, which don't get appreciably more accurate by running more detailed simulations).  However, my own interest undergoes a transition to a deconfined phase beyond about 2 decimal places.  So we'll call it good here. 
 
+For good measure, the phase diagram for $\mathbb{Z}_2$ in 5D is shown in fig. (\ref{z2,56d}).  For \textit{really} good measure, the phase diagram for 6D is also shown.  (I get high on dimensions.)  The hysteresis loops are a little wider, and the transition temperature is a little lower, but they are qualitatively similar to the 4D case. 
 
+\begin{figure}[h!]
+	\begin{centering}
+	\includegraphics[width=\columnwidth]{z2,56d}
+	\caption{$\mathbb{Z}_2$ phase diagram for a 5D, 5 by 5 by 5 by 5 by 5 lattice and for a 6D 5 by 5 by 5 by 4 by 4 by 4 lattice.}
+	\label{z2,56d}
+	\end{centering}
+\end{figure}
+
+I promise I won't do this many dimensions again.  
+
+Having seen all the details in the $\mathbb{Z}_2$ case, I'll expedite the analysis of $\mathbb{Z}_N$ for other values of $N$.  To summarize:  In 3D with the baseline action, $\mathbb{Z}_N$ displays a first order phase transition for all $N>2$.  For the alternative action, for $N\leq4$ we again see a first order phase transition, but with a different critical temperature than for the baseline action.  More interesting is the case of $N\geq 5$, where the alternative action seems to have a higher order phase transition---no sharp hysteresis.  The data I have is too noisy to identify unambiguously the nature of these phase transitions. The comparison between baseline and alternative actions for various $N$ is shown in fig. (\ref{znactions}).  
+
+\begin{figure}[h!]
+	\begin{centering}
+	\includegraphics[width=\columnwidth]{zn,4d}
+	\caption{$\mathbb{Z}_N$ phase diagrams for a 4D, 7 by 7 by 7 lattice, for various $N$.}
+	\label{zn,4d}
+	\end{centering}
+\end{figure}
+
+In 4D, I've only tested the baseline action.  For $N\leq 4$ we see clear first order phase transition hysteresis loops, whereas for higher $N$ we again see higher order transitions.  The 4D results are displayed in fig. (\ref{zn,4d}).  
+
+\begin{figure*}[p]
+	\centering
+	\subfigure{
+		\includegraphics[width=.9\columnwidth]{z2actions,3d}
+		\includegraphics[width=.9\columnwidth]{z3actions,3d}
+	}
+	\subfigure{
+		\includegraphics[width=.9\columnwidth]{z4actions,3d}
+		\includegraphics[width=.9\columnwidth]{z5actions,3d}
+	}
+	\subfigure{
+		\includegraphics[width=.9\columnwidth]{z6actions,3d}
+		\includegraphics[width=.9\columnwidth]{z7actions,3d}
+	}
+	\caption{$\mathbb{Z}_N$ phase diagrams for a 3D, 7 by 7 by 7 lattice, for various $N$, and for two different types of action.}
+	\label{znactions}
+\end{figure*}
+
+\newpage
+
+\subsection{Klein 4-group}
+The Klein 4-group $K_4$ is interesting primarily because it is the smallest group which is not cyclic, i.e. the smallest group that's not $\mathbb{Z}_N$ for some $N$.  It has 4 elements (as you probably guessed from the name, ``Klein''), which I'll call 1, a, b, and c, and its multiplication table is
+
+\begin{table}[h!]
+\centering
+Multiplication table for $K_4$
+
+\begin{tabular} {c | c c c c }
+& 1 & a & b & c \\
+\hline
+1 & 1 & a & b & c \\
+a & a & 1 & c & b \\
+b & b & c & 1 & a \\
+c & c & b & a & 1 \\
+\end{tabular}
+\end{table}
+
+You can verify from this table that $K_4$ is still Abelian, so in some sense it's not \textit{so} different from $Z_4$, the cyclic group with the same number of elements.  And indeed, we find that the phase diagrams for the two groups are virtually identical.  I've plotted them both together in fig. (\ref{k4vz4}) for 3D and 4D.
+
+\begin{figure}[h!]
+	\begin{centering}
+	\includegraphics[width=\columnwidth]{k4vz4,3d}
+	\includegraphics[width=\columnwidth]{k4vz4,4d}
+	\caption{Phase diagram of $K_4$, compared against $\mathbb{Z}_2$, for a 3D, 7 by 7 by 7 lattice and for a 4D 7 by 7 by 7 by 7 lattice.}
+	\label{k4vz4}
+	\end{centering}
+\end{figure}
+
+\subsection{Quaternion group}
+The quaternion group Q is one of the smallest non-Abelian groups (not quite \textit{the} smallest---that distinction goes to the dihedral group $D_6$).  It has eight elements $\pm1,\pm i, \pm j, \pm k$ and multiplication defined by the rules:
+\begin{itemize}
+\item $i^2=j^2=k^2=ijk=-1$
+\item $\pm1$ commutes with all group elements
+\end{itemize}
+I'll forgo writing out the full multiplication table.  
+
+The conjugacy classes of Q are $\{1\},\{-1\},\{i,-1\},\{j,-j\},\{k,-k\}$.  The fact that not all group elements are in their own conjugacy classes (a necessary and sufficient condition for non-Abelian-ness) means that there are now some actions for $\mathbb{Z}_8$ (the cyclic group of the same order as Q) which have no analog in Q.  However, for the baseline action (which does offer a meaningful comparison between $\mathbb{Z}_8$ and Q) I find that there is essentially no difference in the phase structure of Q vs. $\mathbb{Z}_8$, just as was found for the comparison of the Klein 4-group vs. $\mathbb{Z}_4$.  The phase diagram of Q and $\mathbb{Z}_8$ in 3D and 4D is shown in fig. (\ref{qvz8}). 
+
+\begin{figure}[h!]
+	\begin{centering}
+	\includegraphics[width=\columnwidth]{qvz8,3d}
+	\includegraphics[width=\columnwidth]{qvz8,4d}
+	\caption{Phase diagram of $K_4$, compared against $\mathbb{Z}_2$, for a 3D, 7 by 7 by 7 lattice and for a 4D 7 by 7 by 7 by 7 lattice.}
+	\label{qvz8}
+	\end{centering}
+\end{figure}
+
+\section{Conclusions}
+I have performed Monte Carlo simulations of various lattice gauge theories to determine their phase structure.  At the most general level, the main conclusion is that the choice of action and lattice dimension have an important effect on the phase structure of an LGT, whereas the particular local symmetry group of the theory seems to be less important (insofar as different groups can be compared).  That the choice of local symmetry group is less significant is illustrated by the similarity of the phase diagrams for groups $K_4$ vs. $\mathbb{Z}_4$ and Q vs. $\mathbb{Z}_8$.  Note that this conclusion is not entirely obvious \textit{a priori}, since there are different ways for the product around a plaquette to be the group identity in, say Q vs. $\mathbb{Z}_8$.  Clearly, though, this has lesser effect than the order of the group on the resulting phase structure.  It would be interesting to consider more non-trivial actions than the baseline action we have been working with, to see if this makes any difference.  (The only reason I have not done so is for lack of time.)
 
 %%%%%%%%%% Bibliography
 

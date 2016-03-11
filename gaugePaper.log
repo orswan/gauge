@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2016.2.14)  10 MAR 2016 18:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2016.2.14)  10 MAR 2016 20:28
 entering extended mode
 **C:/Users/swan/Desktop/classes/gauge/gaugePaper.tex
 (C:/Users/swan/Desktop/classes/gauge/gaugePaper.tex
@@ -362,28 +362,28 @@ LaTeX Font Info:    Try loading font information for U+bbm on input line 181.
 (C:\Users\swan\AppData\Roaming\MiKTeX\2.9\tex\latex\bbm\ubbm.fd
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
 ) [6] [7]
-Overfull \hbox (6.52744pt too wide) detected at line 225
+Overfull \hbox (8.06909pt too wide) detected at line 224
 \OML/cmm/m/it/10 f\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 \OT1/cmr/m/n/10 ) = [] = [
 ][] [] [] \OML/cmm/m/it/10 du\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 e\OT1/cmr/m/n/10
- )\OML/cmm/m/it/10 S\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 u\OT1/cmr/m/n/10 ]\OML/cm
-m/m/it/10 exp\OT1/cmr/m/n/10 (\OMS/cmsy/m/n/10  \OML/cmm/m/it/10 S\OT1/cmr/m/n
-/10 [\OML/cmm/m/it/10 u\OT1/cmr/m/n/10 ])\OML/cmm/m/it/10 :
+ )\OML/cmm/m/it/10 S\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 u\OT1/cmr/m/n/10 ] [](\OM
+S/cmsy/m/n/10  \OML/cmm/m/it/10 S\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 u\OT1/cmr/m
+/n/10 ])\OML/cmm/m/it/10 :
  []
 
 [8]
-Underfull \hbox (badness 3260) in paragraph at lines 242--243
+Underfull \hbox (badness 3260) in paragraph at lines 241--242
 []\OT1/cmr/m/n/10 A Group class al-lows the spec-i-fi-ca-tion of
  []
 
 
-Underfull \hbox (badness 1466) in paragraph at lines 242--243
+Underfull \hbox (badness 1466) in paragraph at lines 241--242
 \OT1/cmr/m/n/10 ar-bi-trary groups by their mul-ti-pli-ca-tion ta-
  []
 
 [9] <equilibration.png, id=46, 578.16pt x 431.4519pt>
 File: equilibration.png Graphic file (type png)
  <use equilibration.png>
-Package pdftex.def Info: equilibration.png used on input line 258.
+Package pdftex.def Info: equilibration.png used on input line 257.
 (pdftex.def)             Requested size: 229.5pt x 171.26102pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -391,7 +391,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [10 <./equilibration.png>] <z2,2d.png, id=53, 578.16pt x 431.4519pt>
 File: z2,2d.png Graphic file (type png)
  <use z2,2d.png>
-Package pdftex.def Info: z2,2d.png used on input line 275.
+Package pdftex.def Info: z2,2d.png used on input line 274.
 (pdftex.def)             Requested size: 229.5pt x 171.26102pt.
 
 
@@ -400,18 +400,18 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 <z2,3d.png, id=54, 578.16pt x 431.4519pt>
 File: z2,3d.png Graphic file (type png)
  <use z2,3d.png>
-Package pdftex.def Info: z2,3d.png used on input line 286.
+Package pdftex.def Info: z2,3d.png used on input line 285.
 (pdftex.def)             Requested size: 229.5pt x 171.26102pt.
  [11 <./z2,2d.png> <./z2,3d.png>] <z2,4d.png, id=61, 578.16pt x 431.4519pt>
 File: z2,4d.png Graphic file (type png)
  <use z2,4d.png>
-Package pdftex.def Info: z2,4d.png used on input line 296.
+Package pdftex.def Info: z2,4d.png used on input line 295.
 (pdftex.def)             Requested size: 229.5pt x 171.26102pt.
 
 <z2,4d,phase.png, id=62, 578.16pt x 431.4519pt>
 File: z2,4d,phase.png Graphic file (type png)
  <use z2,4d,phase.png>
-Package pdftex.def Info: z2,4d,phase.png used on input line 304.
+Package pdftex.def Info: z2,4d,phase.png used on input line 303.
 (pdftex.def)             Requested size: 229.5pt x 171.26102pt.
 
 
@@ -420,121 +420,125 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 <z2,56d.png, id=63, 578.16pt x 431.4519pt>
 File: z2,56d.png Graphic file (type png)
  <use z2,56d.png>
-Package pdftex.def Info: z2,56d.png used on input line 316.
+Package pdftex.def Info: z2,56d.png used on input line 315.
 (pdftex.def)             Requested size: 229.5pt x 171.26102pt.
 
 <z2actions,3d.png, id=64, 578.16pt x 433.62pt>
 File: z2actions,3d.png Graphic file (type png)
  <use z2actions,3d.png>
-Package pdftex.def Info: z2actions,3d.png used on input line 329.
+Package pdftex.def Info: z2actions,3d.png used on input line 328.
 (pdftex.def)             Requested size: 206.5486pt x 154.90549pt.
 
 <z3actions,3d.png, id=65, 578.16pt x 433.62pt>
 File: z3actions,3d.png Graphic file (type png)
  <use z3actions,3d.png>
-Package pdftex.def Info: z3actions,3d.png used on input line 329.
+Package pdftex.def Info: z3actions,3d.png used on input line 328.
 (pdftex.def)             Requested size: 206.5486pt x 154.90549pt.
 
 <z4actions,3d.png, id=66, 578.16pt x 433.62pt>
 File: z4actions,3d.png Graphic file (type png)
  <use z4actions,3d.png>
-Package pdftex.def Info: z4actions,3d.png used on input line 333.
+Package pdftex.def Info: z4actions,3d.png used on input line 332.
 (pdftex.def)             Requested size: 206.5486pt x 154.90549pt.
 
 <z5actions,3d.png, id=67, 578.16pt x 433.62pt>
 File: z5actions,3d.png Graphic file (type png)
  <use z5actions,3d.png>
-Package pdftex.def Info: z5actions,3d.png used on input line 333.
+Package pdftex.def Info: z5actions,3d.png used on input line 332.
 (pdftex.def)             Requested size: 206.5486pt x 154.90549pt.
 
 <z6actions,3d.png, id=68, 578.16pt x 433.62pt>
 File: z6actions,3d.png Graphic file (type png)
  <use z6actions,3d.png>
-Package pdftex.def Info: z6actions,3d.png used on input line 337.
+Package pdftex.def Info: z6actions,3d.png used on input line 336.
 (pdftex.def)             Requested size: 206.5486pt x 154.90549pt.
 
 <z7actions,3d.png, id=69, 578.16pt x 433.62pt>
 File: z7actions,3d.png Graphic file (type png)
  <use z7actions,3d.png>
-Package pdftex.def Info: z7actions,3d.png used on input line 337.
+Package pdftex.def Info: z7actions,3d.png used on input line 336.
 (pdftex.def)             Requested size: 206.5486pt x 154.90549pt.
  [12 <./z2,4d.png> <./z2,4d,phase.png> <./z2,56d.png>] [13 <./z2actions,3d.png>
  <./z3actions,3d.png> <./z4actions,3d.png> <./z5actions,3d.png> <./z6actions,3d
 .png> <./z7actions,3d.png>] <zn,4d.png, id=86, 578.16pt x 433.62pt>
 File: zn,4d.png Graphic file (type png)
  <use zn,4d.png>
-Package pdftex.def Info: zn,4d.png used on input line 349.
+Package pdftex.def Info: zn,4d.png used on input line 348.
 (pdftex.def)             Requested size: 229.5pt x 172.12163pt.
 
 <heatcapz2z4z6,4d.png, id=87, 578.16pt x 433.62pt>
 File: heatcapz2z4z6,4d.png Graphic file (type png)
  <use heatcapz2z4z6,4d.png>
-Package pdftex.def Info: heatcapz2z4z6,4d.png used on input line 357.
+Package pdftex.def Info: heatcapz2z4z6,4d.png used on input line 356.
 (pdftex.def)             Requested size: 229.5pt x 172.12163pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 6332) has occurred while \output is active []
 
 
 <k4vz4,3d.png, id=88, 578.16pt x 433.62pt>
 File: k4vz4,3d.png Graphic file (type png)
  <use k4vz4,3d.png>
-Package pdftex.def Info: k4vz4,3d.png used on input line 388.
+Package pdftex.def Info: k4vz4,3d.png used on input line 387.
 (pdftex.def)             Requested size: 229.5pt x 172.12163pt.
 
 <k4vz4,4d.png, id=89, 578.16pt x 433.62pt>
 File: k4vz4,4d.png Graphic file (type png)
  <use k4vz4,4d.png>
-Package pdftex.def Info: k4vz4,4d.png used on input line 389.
+Package pdftex.def Info: k4vz4,4d.png used on input line 388.
 (pdftex.def)             Requested size: 229.5pt x 172.12163pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [14 <./zn,4d.png> <./heatcapz2z4z6,4d.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 403--404
+Underfull \hbox (badness 10000) in paragraph at lines 402--403
 []\OT1/cmr/m/n/10 The con-ju-gacy classes of Q are
  []
 
 
-Underfull \hbox (badness 1348) in paragraph at lines 403--404
+Underfull \hbox (badness 1348) in paragraph at lines 402--403
 \OT1/cmr/m/n/10 classes (a nec-es-sary and suf-fi-cient con-di-tion for
  []
 
 <qvz8,3d.png, id=95, 578.16pt x 433.62pt>
 File: qvz8,3d.png Graphic file (type png)
  <use qvz8,3d.png>
-Package pdftex.def Info: qvz8,3d.png used on input line 407.
+Package pdftex.def Info: qvz8,3d.png used on input line 406.
 (pdftex.def)             Requested size: 229.5pt x 172.12163pt.
 
 <qvz8,4d.png, id=96, 578.16pt x 433.62pt>
 File: qvz8,4d.png Graphic file (type png)
  <use qvz8,4d.png>
-Package pdftex.def Info: qvz8,4d.png used on input line 408.
+Package pdftex.def Info: qvz8,4d.png used on input line 407.
 (pdftex.def)             Requested size: 229.5pt x 172.12163pt.
 
 <qcrosssection.png, id=97, 578.16pt x 431.4519pt>
 File: qcrosssection.png Graphic file (type png)
  <use qcrosssection.png>
-Package pdftex.def Info: qcrosssection.png used on input line 418.
+Package pdftex.def Info: qcrosssection.png used on input line 417.
 (pdftex.def)             Requested size: 229.5pt x 171.26102pt.
 
 [15 <./k4vz4,3d.png> <./k4vz4,4d.png> <./qvz8,3d.png> <./qvz8,4d.png>]
+Missing character: There is no Ã in font cmr10!
+Missing character: There is no ¼ in font cmr10!
 Missing character: There is no â in font cmr10!
 Missing character: There is no € in font cmr10!
 Missing character: There is no ™ in font cmr10!
+Missing character: There is no Ã in font cmr10!
+Missing character: There is no ¼ in font cmr10!
  [16 <./qcrosssection.png>] (gaugePaper.aux) ) 
 Here is how much of TeX's memory you used:
- 4337 strings out of 493634
- 60641 string characters out of 3141317
+ 4340 strings out of 493634
+ 60665 string characters out of 3141317
  153694 words of memory out of 3000000
- 7648 multiletter control sequences out of 15000+200000
+ 7651 multiletter control sequences out of 15000+200000
  13105 words of font info for 54 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 27i,9n,40p,1550b,1117s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,9n,40p,1554b,1117s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\swan\AppData\Local\MiK
 TeX\2.9\fonts\pk\ljfour\public\bbm\dpi600\bbm10.pk><C:/Program Files (x86)/MiKT
 eX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files (x86)/MiKTeX
@@ -554,7 +558,7 @@ m/cmsy7.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
 mti10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmt
 t9.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/m
 sbm10.pfb>
-Output written on gaugePaper.pdf (16 pages, 1002199 bytes).
+Output written on gaugePaper.pdf (16 pages, 1002751 bytes).
 PDF statistics:
  166 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

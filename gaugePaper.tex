@@ -251,7 +251,15 @@ Most of the run time of the code is spent on two tasks: sweeping the lattice, an
 
 [A remark on avenues for improvement: Both of the two computationally intensive tasks mentioned above are amenable to parallelization.  Given that Python is inherently slow at looping anyway (which is essentially what sweeps and action computations boil down to), I expect great speedups could be achieved by using something like CUDA to do the heavy lifting of this program.]
 
-I don't know a good way to figure out theoretically what sort of equilibration and relaxation times are needed, but it's easy to see by eye in the simulations.  For example, if I set the field values to be uniformly the group identity element and equilibrate the system at high temperature, I find that it only takes about 1 or 2 sweeps for the action to reach its equilibrium value.  Near the critical point it can take many more sweeps (maybe 10 to 15) to equilibrate, which has the same origin as the hysteresis effect we mentioned earlier.  Based on these observations, we will typically do 2 to 10 sweeps to relax or equilibrate the system.  
+I don't know a good way to figure out theoretically what sort of equilibration and relaxation times are needed, but it's easy to see by eye in the simulations.  For example, if I set the field values to be uniformly the group identity element on one half of the lattice and uniformly random on the other half (i.e. a phase boundary) and equilibrate the system at high temperature, I find that it only takes about 1 or 2 sweeps for the action to reach its equilibrium value (see fig. (\ref{equilibration})).  At low temperature it might take more like 5 sweeps.  Near the critical point it can take many more sweeps (maybe 10 to 15) to equilibrate, which has the same origin as the hysteresis effect we mentioned earlier.  Based on these observations, we will typically do 2 to 10 sweeps to relax or equilibrate the system.  
+
+\begin{figure}[h!]
+	\begin{centering}
+	\includegraphics[width=\columnwidth]{equilibration}
+	\caption[$\mathbb{Z}_2$ lattice gauge theory phase diagram for a 3D lattice.]{Equilibration of a 3D, $\mathbb{Z}_2$ lattice gauge theory.  From a phase boundary initial condition, the system is equilibrated by sweeping the lattice repeatedly.  The curves shown correspond to inverse temperatures $\beta$ of 0, .4, .8, 1.2, or 1.6, where the higher curves correspond the lower values of $\beta$ (i.e. higher temperatures).  It is seen that it takes only about 5 sweeps at most to reach equilibrium.}
+	\label{equilibration}
+	\end{centering}
+\end{figure}
 
 \section{Results}
 I've done simulations for various discrete local symmetry groups: the cyclic groups $\mathbb{Z}_N$ for various values of $N$, the Klein 4-group $K_4$, and the quaternion group $Q$.  We'll examine each of these cases separately.
@@ -259,7 +267,7 @@ I've done simulations for various discrete local symmetry groups: the cyclic gro
 \subsection{$\mathbb{Z}_N$}
 $\mathbb{Z}_N$ is just the group of integers (mod N), with addition as the group operation.  An isomorphic description is as set of $N^{th}$ roots of unity, with the group operation being multiplication of complex numbers.  This group is Abelian, so each element is in a conjugacy class by itself, and thus any function on the group is a candidate plaquette action.  In addition to the baseline plaquette action, another plaquette action of interest is given by 
 \[s(j) = \frac{1}{2}\left(1-\cos\left(\frac{2\pi j}{N}\right)\right) = \frac{1}{2}\left(1 - \Re{\left\{ e^{2\pi i j/N} \right\}}\right),\]
-where we are representing group elements by $j=0,1,...,N-1$.  The factor of $frac{1}{2}$ is chosen to make this action take values in the range $[0,1]$, so that it is more directly comparable to the baseline action (which takes value in the same range).  The reason this alternative action is interesting is that, in the limit as $N\rightarrow \infty$, it reduces to the plaquette action for a $U(1)$ gauge theory (as arises in e.g. lattice quantum electrodynamics).  We won't look at $U(1)$, but we will look at this alternative action.  
+where we are representing group elements by $j=0,1,...,N-1$.  The factor of $\frac{1}{2}$ is chosen to make this action take values in the range $[0,1]$, so that it is more directly comparable to the baseline action (which also takes value in $[0,1]$).  The reason this alternative action is interesting is that, in the limit as $N\rightarrow \infty$, it reduces to the plaquette action for a $U(1)$ gauge theory (as arises in e.g. lattice quantum electrodynamics).  We won't look at $U(1)$, but we will look at this alternative action.  
 
 We start with the simplest case: $\mathbb{Z}_2$ in 2 dimensions.  Note that for $\mathbb{Z}_2$ the baseline action and the alternative action mentioned above are identical, so we will only mention the baseline action.  Sweeping from $\beta=0$ to $\beta=2$ and back (in 80 steps each way) yields the phase diagram (average plaquette energy vs. $\beta$) of fig. (\ref{z2,2d}).
 \begin{figure}[h!]
@@ -299,7 +307,7 @@ We can zero in on this phase transition using the phase boundary method, the res
 	\end{centering}
 \end{figure}
 
-The phase boundary method pins the critical point at around $\beta= .88$.  In principle, we can attain still better accuracy by this method by looking at more values of $\beta$ and more sweeps (unlike the hysteresis loops, which don't get appreciably more accurate by running more detailed simulations).  However, my own interest undergoes a transition to a deconfined phase beyond about 2 decimal places.  So we'll call it good here. 
+The phase boundary method pins the critical point at around $\beta= .88$, where the plaquette energy tends neither up nor down at a rapid pace.  In principle, we can attain still better accuracy via this method by looking at more values of $\beta$ and more sweeps (unlike the hysteresis loops, which don't get appreciably more accurate by running more detailed simulations).  However, my own interest undergoes a transition to a deconfined phase beyond about 2 decimal places.  So we'll call it good here. 
 
 For good measure, the phase diagram for $\mathbb{Z}_2$ in 5D is shown in fig. (\ref{z2,56d}).  For \textit{really} good measure, the phase diagram for 6D is also shown.  (I get high on dimensions.)  The hysteresis loops are a little wider, and the transition temperature is a little lower, but they are qualitatively similar to the 4D case. 
 
@@ -312,18 +320,6 @@ For good measure, the phase diagram for $\mathbb{Z}_2$ in 5D is shown in fig. (\
 \end{figure}
 
 I promise I won't do this many dimensions again.  
-
-Having seen all the details in the $\mathbb{Z}_2$ case, I'll expedite the analysis of $\mathbb{Z}_N$ for other values of $N$.  To summarize:  In 3D with the baseline action, $\mathbb{Z}_N$ displays a first order phase transition for all $N>2$.  For the alternative action, for $N\leq4$ we again see a first order phase transition, but with a different critical temperature than for the baseline action.  More interesting is the case of $N\geq 5$, where the alternative action seems to have a higher order phase transition---no sharp hysteresis.  The data I have is too noisy to identify unambiguously the nature of these phase transitions. The comparison between baseline and alternative actions for various $N$ is shown in fig. (\ref{znactions}).  
-
-\begin{figure}[h!]
-	\begin{centering}
-	\includegraphics[width=\columnwidth]{zn,4d}
-	\caption{$\mathbb{Z}_N$ phase diagrams for a 4D, 7 by 7 by 7 lattice, for various $N$.}
-	\label{zn,4d}
-	\end{centering}
-\end{figure}
-
-In 4D, I've only tested the baseline action.  For $N\leq 4$ we see clear first order phase transition hysteresis loops, whereas for higher $N$ we again see higher order transitions.  The 4D results are displayed in fig. (\ref{zn,4d}).  
 
 \begin{figure*}[p]
 	\centering
@@ -344,6 +340,29 @@ In 4D, I've only tested the baseline action.  For $N\leq 4$ we see clear first o
 \end{figure*}
 
 \newpage
+
+
+Having seen all the details in the $\mathbb{Z}_2$ case, I'll expedite the analysis of $\mathbb{Z}_N$ for other values of $N$.  To summarize:  In 3D with the baseline action, $\mathbb{Z}_N$ displays a first order phase transition for all $N>2$.  For the alternative action, for $N\leq4$ we again see a first order phase transition, but with a different critical temperature than for the baseline action.  More interesting is the case of $N\geq 5$, where the alternative action seems to have a higher order phase transition---no sharp hysteresis.  The data I have is too noisy to identify unambiguously the nature of these phase transitions. The comparison between baseline and alternative actions for various $N$ is shown in fig. (\ref{znactions}).  
+
+\begin{figure}[h!]
+	\begin{centering}
+	\includegraphics[width=\columnwidth]{zn,4d}
+	\caption{$\mathbb{Z}_N$ phase diagrams for a 4D, 7 by 7 by 7 by 7 lattice, for various $N$.}
+	\label{zn,4d}
+	\end{centering}
+\end{figure}
+
+\begin{figure}[h!]
+	\begin{centering}
+	\includegraphics[width=\columnwidth]{heatcapz2z4z6,4d}
+	\caption{$\mathbb{Z}_N$ capacities for a 4D, 7 by 7 by 7 by 7 lattice, for various $N$.  Note the blip on the far right for $\mathbb{Z}_6$: this is a second phase transition. }
+	\label{heatcapz}
+	\end{centering}
+\end{figure}
+
+In 4D, I've only tested the baseline action.  For $N\leq 4$ we see clear first order phase transition hysteresis loops, whereas for higher $N$ we again see higher order transitions.  The 4D results are displayed in fig. (\ref{zn,4d}).  
+
+Something I have not mentioned yet is the heat capacity.  Around a first order phase transition, we expect to see a divergence in the heat capacity.  And indeed, for the 4D $\mathbb{Z}_N$ LGTs we do see divergences in heat capacity around the phase transitions, as shown in fig. (\ref{heatcapz}).
 
 \subsection{Klein 4-group}
 The Klein 4-group $K_4$ is interesting primarily because it is the smallest group which is not cyclic, i.e. the smallest group that's not $\mathbb{Z}_N$ for some $N$.  It has 4 elements (as you probably guessed from the name, ``Klein''), which I'll call 1, a, b, and c, and its multiplication table is
@@ -368,7 +387,7 @@ You can verify from this table that $K_4$ is still Abelian, so in some sense it'
 	\begin{centering}
 	\includegraphics[width=\columnwidth]{k4vz4,3d}
 	\includegraphics[width=\columnwidth]{k4vz4,4d}
-	\caption{Phase diagram of $K_4$, compared against $\mathbb{Z}_2$, for a 3D, 7 by 7 by 7 lattice and for a 4D 7 by 7 by 7 by 7 lattice.}
+	\caption{Phase diagram of $K_4$, compared against $\mathbb{Z}_4$, for a 3D, 7 by 7 by 7 lattice and for a 4D 7 by 7 by 7 by 7 lattice.}
 	\label{k4vz4}
 	\end{centering}
 \end{figure}
@@ -387,10 +406,21 @@ The conjugacy classes of Q are $\{1\},\{-1\},\{i,-1\},\{j,-j\},\{k,-k\}$.  The f
 	\begin{centering}
 	\includegraphics[width=\columnwidth]{qvz8,3d}
 	\includegraphics[width=\columnwidth]{qvz8,4d}
-	\caption{Phase diagram of $K_4$, compared against $\mathbb{Z}_2$, for a 3D, 7 by 7 by 7 lattice and for a 4D 7 by 7 by 7 by 7 lattice.}
+	\caption{Phase diagram of $K_4$, compared against $\mathbb{Z}_8$, for a 3D, 7 by 7 by 7 lattice and for a 4D 7 by 7 by 7 by 7 lattice.}
 	\label{qvz8}
 	\end{centering}
 \end{figure}
+
+Because it's kind of pretty, I'll show what a slice of a quaternion LGT looks like at the critical temperature; see fig. (\ref{qcrosssection}).
+
+\begin{figure}[h!]
+	\begin{centering}
+	\includegraphics[width=\columnwidth]{qcrosssection}
+	\caption{A cross section of a quaternion LFT on a 3D, 7 by 7 by 7 lattice at $\beta=2$.  Different edge colors represent different group elements.}
+	\label{qcrosssection}
+	\end{centering}
+\end{figure}
+
 
 \section{Conclusions}
 I have performed Monte Carlo simulations of various lattice gauge theories to determine their phase structure.  At the most general level, the main conclusion is that the choice of action and lattice dimension have an important effect on the phase structure of an LGT, whereas the particular local symmetry group of the theory seems to be less important (insofar as different groups can be compared).  That the choice of local symmetry group is less significant is illustrated by the similarity of the phase diagrams for groups $K_4$ vs. $\mathbb{Z}_4$ and Q vs. $\mathbb{Z}_8$.  Note that this conclusion is not entirely obvious \textit{a priori}, since there are different ways for the product around a plaquette to be the group identity in, say Q vs. $\mathbb{Z}_8$.  Clearly, though, this has lesser effect than the order of the group on the resulting phase structure.  It would be interesting to consider more non-trivial actions than the baseline action we have been working with, to see if this makes any difference.  (The only reason I have not done so is for lack of time.)
